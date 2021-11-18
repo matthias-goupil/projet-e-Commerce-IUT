@@ -59,7 +59,7 @@ abstract class Model{
 
     public static function selectAll(): array{
         try{
-            $table_name = "SERRE__" . ucfirst(static::$objet);
+            $table_name = "ECommerce__" . ucfirst(static::$objet);
             $class_name = "Model".ucfirst(static::$objet);
             $rep = self::getPdo()->query(
                 "SELECT * FROM $table_name "
@@ -83,14 +83,14 @@ abstract class Model{
 
     public static function select($primary_value) {
         try {
-            $table_name = "SERRE__".ucfirst(static::$objet);
+            $table_name = "ECommerce__".ucfirst(static::$objet);
             $class_name = "Model".ucfirst(static::$objet);
             $primary_key = static::$primary;
 
-            $req_prep = Model::getPDO()->prepare("SELECT * from $table_name WHERE $primary_key =:nom_tag");
+            $req_prep = Model::getPDO()->prepare("SELECT * from $table_name WHERE $primary_key =:primarykey");
 
             $req_prep->execute(array(
-                "nom_tag" => $primary_value
+                "primarykey" => $primary_value
             ));
 
             $object = $req_prep->fetch(PDO::FETCH_ASSOC);
@@ -111,15 +111,15 @@ abstract class Model{
     }
 
     public static function delete($primary_value){
-        $table_name = "SERRE__" . ucfirst(static::$objet);
+        $table_name = "ECommerce__" . ucfirst(static::$objet);
         $primary_key = static::$primary;
 
         try{
             $req_prep = Model::getPdo()->prepare(
-                "DELETE FROM $table_name WHERE $primary_key=:idTache"
+                "DELETE FROM $table_name WHERE $primary_key=:primarykey"
             );
             $req_prep->execute([
-                'idTache' => $primary_value,
+                'primarykey' => $primary_value,
             ]);
         }catch(PDOException $e){
             if (Conf::getDebug()) {
@@ -132,7 +132,7 @@ abstract class Model{
     }
 
     public static function update($data){
-        $table_name = "SERRE__" . ucfirst(static::$objet);
+        $table_name = "ECommerce__" . ucfirst(static::$objet);
         $primary_key = static::$primary;
 
         try{
