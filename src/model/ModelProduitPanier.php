@@ -3,7 +3,7 @@ require_once File::build_path(["model","Model.php"]);
 
 class ModelProduit extends Model {
     protected static $primary='idproduit';
-    protected static $objet = 'ECommerce__produit';
+    protected static $objet = 'produit';
 
     protected $idProduit;
     protected $idPanier;

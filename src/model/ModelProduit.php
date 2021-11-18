@@ -3,7 +3,7 @@ require_once File::build_path(["model","Model.php"]);
 
 class ModelProduit extends Model {
     protected static $primary='idproduit';
-    protected static $objet = 'ECommerce__produit';
+    protected static $objet = 'produit';
 
     protected $idproduit;
     protected $intitule;
@@ -11,20 +11,22 @@ class ModelProduit extends Model {
     protected $quantite;
     protected $description;
     protected $nbVue;
+    protected $idImagesProduit;
     
     public function save(){
         try{
             $table_name = "ECommerce__".ucfirst(self::$objet);
             $req_prep = Model::getPdo()->prepare(
-                "INSERT INTO $table_name(intitule,prix,quantite, description,nbVue)
-                        VALUES(:intitule,:prix,:quantite,:description, :nbVue)"
+                "INSERT INTO $table_name(intitule,prix,quantite, description,nbVue,:idImagesProduit)
+                        VALUES(:intitule,:prix,:quantite,:description, :nbVue,:idImagesProduit)"
             );
             $req_prep->execute([
                 "intitule" => $this->intotule,
                 "prix" => $this->prix,
                 "quantite" => $this->quantite,
                 "description" => $this->description,
-                "nbVue" => $this->nbVue
+                "nbVue" => $this->nbVue,
+                "idImagesProduit" => $this->idImagesProduit
             ]);
         }catch (PDOException $e){
             if (Conf::getDebug()) {
