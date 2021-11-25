@@ -1,25 +1,22 @@
 <?php
 require_once File::build_path(["model","Model.php"]);
 
-class ModelProduit extends Model {
-    protected static $primary='idproduit';
-    protected static $objet = 'produit';
+class ModelPanier extends Model{
+    protected static $primary='idPanier';
+    protected static $objet = 'panier';
 
-    protected $idProduit;
     protected $idPanier;
-    protected $quantite;
+    protected $prixTotal;
 
-    
     public function save(){
         try{
             $table_name = "ECommerce__".ucfirst(self::$objet);
             $req_prep = Model::getPdo()->prepare(
-                "INSERT INTO $table_name(idProduit,quantite)
-                        VALUES(:idProduit,:quantite)"
+                "INSERT INTO $table_name(prixTotal)
+                         VALUES(:prixTotal)"
             );
             $req_prep->execute([
-                "idProduit" => $this->idProduit,
-                "quantite" => $this->quantite
+                "prixTotal" => $this->prixTotal
             ]);
         }catch (PDOException $e){
             if (Conf::getDebug()) {
@@ -29,6 +26,5 @@ class ModelProduit extends Model {
             }
             die();
         }
-
     }
 }
