@@ -1,0 +1,68 @@
+
+.detailProduit{
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	width: calc(100% - 200px);
+    min-height: calc(100vh - 400px);
+    padding: 100px;
+}
+
+.titre{
+font-size: 48px;
+}
+
+.images {
+	border-style: solid;
+	border-width: medium;
+	border-color: black;
+}
+
+.image{
+	background-color: #e5e5e5;
+	height: 90px;
+}
+
+.prix{
+
+}
+
+.stock{
+
+}
+
+.scam{
+
+}
+
+.description{
+
+}
+
+.note_moy{
+
+}
+
+.avis_tout{
+
+}
+
+.avis{
+border-width: 10em;
+	border-color: black;
+}
+
+.nom_prenom{
+
+}
+
+.note{
+
+}
+
+.commentaire{
+
+}
+
+
+
