@@ -12,7 +12,13 @@ class ModelProduit extends Model {
     protected $description;
     protected $nbVue;
     protected $idImagesProduit;
-    
+    protected $urlImage1;
+    protected $urlImage2;
+    protected $urlImage3;
+    protected $urlImage4;
+    protected $urlImage5;
+
+
     public function save(){
         try{
             $table_name = "ECommerce__".ucfirst(self::$objet);
@@ -36,8 +42,8 @@ class ModelProduit extends Model {
             }
             die();
         }
-
     }
+
 }
 
 
