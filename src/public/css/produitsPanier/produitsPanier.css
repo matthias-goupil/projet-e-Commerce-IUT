@@ -5,11 +5,22 @@
 }
 
 
+a{
+    text-decoration: none;
+}
+
 .produitsPanier{
     display: block;
     width: 100%;
-    height: 60px;
+    height: 100px;
     display: flex;
     flex-direction: row;
     justify-content: space-around;
+    align-items: center;
+    text-decoration: none;
+}
+
+.produitsPanier img{
+    width: 100%;
+    height: 10px;
 }

@@ -12,4 +12,19 @@ class ControllerProduitsPanier {
 
         require File::build_path(["view","view.php"]);
     }
+
+    public static function ajouter(){
+        require_once File::build_path(["model","ModelProduitsPanier.php"]);
+
+        $data = [
+            "quantite" => $_GET['quantite']+1,
+        ];
+    
+            $tabProduitsPanier = ModelProduitsPanier::update($data);
+            $view = "produitsPanier";
+            $titre = "Voici votre panier";
+    
+            require File::build_path(["view","view.php"]);
+            ControllerProduitsPanier::readAll();
+    }
 }

@@ -48,7 +48,7 @@ class ModelProduitsPanier extends Model {
             $data = [];
             while($object = $rep->fetch(PDO::FETCH_ASSOC)){
                 $data[] = [
-                    "produitPanier" => new $class_name($object),
+                    "produitsPanier" => new $class_name($object),
                     "produit" => new ModelProduit($object)
                 ];    
                 return $data;
