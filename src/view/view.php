@@ -10,6 +10,7 @@
         <h1>Bottle Trick-Shop</h1>
         <nav>
             <ul>
+                <li><a href="?controller=produit&action=read">Detailproduit</a></li>
                 <li><a href="#">Produits</a></li>
                 <li><a href="#">Connexion</a></li>
                 <li><a href="#">Incription</a></li>
