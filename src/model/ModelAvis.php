@@ -34,6 +34,34 @@ class ModelAvis extends Model{
         }
     }
 
+     public static function selectUtilisateursByProduit($idProduit) {
+        try{
+            require_once File::build_path(["model","ModelUtilisateur.php"]);
+            $table_name = "ECommerce__".ucfirst(self::$objet);
+            $req = Model::getPdo()->prepare(
+                "SELECT * FROM ECommerce__Avis a JOIN ECommerce__Utilisateur u ON a.idUtilisateur = u.idUtilisateur
+                WHERE idProduit = :idProduit"
+            );
+            $req->execute([
+                "idProduit" => $idProduit 
+            ]);
 
+            $data = [];
+            while($rep = $req->fetch()){
+                $data[] = [
+                    "avis" => new ModelAvis($rep),
+                    "utilisateur" => new ModelUtilisateur($rep)
+                ];
+            }
+            return $data;
+        }catch (PDOException $e){
+            if (Conf::getDebug()) {
+                echo $e->getMessage(); // affiche un message d'erreur
+            } else {
+                ControllerGeneral::error();
+            }
+            die();
+        }
+     }
 
 }
