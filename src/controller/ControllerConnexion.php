@@ -1,11 +1,11 @@
 <?php
 class ControllerConnexion {
-    protected static $object = "connexion";
+    protected static $objet = "utilisateur";
 
     public static function read() {
         if (empty($_SESSION["user"])) {
-            $view = "connexion";
-            $title = "connexion";
+            $view = "utilisateur";
+            $title = "utilisateur";
             require File::build_path(["view", "view.php"]);
         } else {
             header("Location: ?controller=accueil");

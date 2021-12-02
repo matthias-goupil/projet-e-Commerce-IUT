@@ -27,7 +27,8 @@
     </header>
 
     <body>
-        <?php require_once File::build_path(["view",self::$objet,$view.".php"])?>
+
+        <?php require_once File::build_path(["view",self::$objet,$view.".php"]); ?>
     </body>
 
     <footer>

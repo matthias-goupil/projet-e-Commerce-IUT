@@ -1,15 +1,17 @@
 <?php
 class ControllerUtilisateur {
+    protected static $objet = "utilisateur";
+
     public static function connexion(){
-        require_once File::build_path(["view", "connexion", "connexion.php"]);
-    }
+        $view = "connexion";
+        $titre = "Connexion";
+        require File::build_path(["view","view.php"]);    }
 
     public static function inscription(){
 
     }
 
-    public static function connected(){
-        echo 'funni clock man';
+    public static function connected() {
     }
 
     public static function create() {
