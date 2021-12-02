@@ -8,7 +8,7 @@ class ModelProduit extends Model {
     protected $idproduit;
     protected $intitule;
     protected $prix;
-    protected $quantite;
+    protected $stock;
     protected $description;
     protected $nbVue;
     protected $idImagesProduit;
@@ -23,13 +23,13 @@ class ModelProduit extends Model {
         try{
             $table_name = "ECommerce__".ucfirst(self::$objet);
             $req_prep = Model::getPdo()->prepare(
-                "INSERT INTO $table_name(intitule,prix,quantite, description,nbVue,:idImagesProduit)
-                        VALUES(:intitule,:prix,:quantite,:description, :nbVue,:idImagesProduit)"
+                "INSERT INTO $table_name(intitule,prix,stock, description,nbVue,:idImagesProduit)
+                        VALUES(:intitule,:prix,:stock,:description, :nbVue,:idImagesProduit)"
             );
             $req_prep->execute([
                 "intitule" => $this->intotule,
                 "prix" => $this->prix,
-                "quantite" => $this->quantite,
+                "stock" => $this->stock,
                 "description" => $this->description,
                 "nbVue" => $this->nbVue,
                 "idImagesProduit" => $this->idImagesProduit

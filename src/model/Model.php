@@ -143,6 +143,7 @@ abstract class Model{
                 }
             }
             $string = rtrim($string,",");
+            echo "UPDATE $table_name SET $string WHERE $primary_key = :$primary_key<br>";
             $req_prep = Model::getPdo()->prepare(
                 "UPDATE $table_name SET $string WHERE $primary_key = :$primary_key"
             );
