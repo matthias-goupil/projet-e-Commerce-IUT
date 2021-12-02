@@ -17,14 +17,30 @@ class ControllerProduitsPanier {
         require_once File::build_path(["model","ModelProduitsPanier.php"]);
 
         $data = [
-            "quantite" => $_GET['quantite']+1,
+            "idProduit" => $_GET['idProduit']
         ];
     
-            $tabProduitsPanier = ModelProduitsPanier::update($data);
+            ModelProduitsPanier::ajouterProduit($data);
             $view = "produitsPanier";
             $titre = "Voici votre panier";
     
-            require File::build_path(["view","view.php"]);
             ControllerProduitsPanier::readAll();
+            require File::build_path(["view","view.php"]);
+    }
+
+
+    public static function supprimer(){
+        require_once File::build_path(["model","ModelProduitsPanier.php"]);
+
+        $data = [
+            "idProduit" => $_GET['idProduit']
+        ];
+    
+            ModelProduitsPanier::supprimerProduit($data);
+            $view = "produitsPanier";
+            $titre = "Voici votre panier";
+    
+            ControllerProduitsPanier::readAll();
+            require File::build_path(["view","view.php"]);
     }
 }

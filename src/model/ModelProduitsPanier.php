@@ -51,15 +51,53 @@ class ModelProduitsPanier extends Model {
                     "produitsPanier" => new $class_name($object),
                     "produit" => new ModelProduit($object)
                 ];    
-                return $data;
+                
             }
-             
+             return $data;
         } 
         catch(PDOException $e){
             if (Conf::getDebug()) {
                 echo $e->getMessage(); // affiche un message d'erreur
             } else {
                 echo 'Une erreur est survenue <a href=""> retour a la page d\'accueil </a>';
+            }
+            die();
+        }
+    }
+
+
+
+    public static function ajouterProduit($data){
+        $table_name = "ECommerce__" . ucfirst(static::$objet);
+
+        try{
+            $req_prep = Model::getPdo()->prepare(
+                "UPDATE ECommerce__ProduitsPanier SET quantite = quantite + 1 WHERE idProduit =:idProduit"
+            );
+            $req_prep->execute($data);
+        }catch(PDOException $e){
+            if (Conf::getDebug()) {
+                echo $e->getMessage(); // affiche un message d'erreur
+            } else {
+                ControllerGeneral::error();
+            }
+            die();
+        }
+    }
+
+    public static function supprimerProduit($data){
+        $table_name = "ECommerce__" . ucfirst(static::$objet);
+
+        try{
+            $req_prep = Model::getPdo()->prepare(
+                "UPDATE ECommerce__ProduitsPanier SET quantite = quantite - 1 WHERE idProduit =:idProduit"
+            );
+            $req_prep->execute($data);
+        }catch(PDOException $e){
+            if (Conf::getDebug()) {
+                echo $e->getMessage(); // affiche un message d'erreur
+            } else {
+                ControllerGeneral::error();
             }
             die();
         }
