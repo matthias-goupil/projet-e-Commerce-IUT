@@ -21,27 +21,38 @@
     }
     ?>
     </div>
-    <div>
+    <div class ="contenu">
     <?php
     echo '<p class = titre> ' . $intitule . ' </p>'; //TITRE PRODUIT
-    echo '<p class="prix"> Prix : ' . $prix . ' €</p>'; //PRIX 
-    echo '<p class="stock"> ' . $stock . ' produit(s) restant(s), payez !</p>'; //STOCK
-    echo '<p class="scam"> ' . $scam . ' personnes consultent actuellement la page </p>'; // STOCK + 3
-    echo '<p class="description"> Description : ' . $description . '.</p>'; //DESCRIPTION
 
-    
-    foreach($util as $avis) {
+      foreach($util as $avis) {
         $noteAddition += $avis["avis"]->get("note");
             $nbAvis++;
     }
+    $noteReste = 5;
+
     if($nbAvis > 0) {
         $noteGlobale = $noteAddition / $nbAvis;
-        echo '<p class="note_moy"> Note moyenne : ' . $noteGlobale . '</p>'; // NOTE MOYENNE
+        while($noteGlobale != 0) {
+            if($noteGlobale >= 1) {
+                echo "<span class='etoile_jaune'> ★ </span>";
+                $noteGlobale-=1;
+            }
+            else {
+                echo "<span class='etoile_grise'> </span>";
+            break;    
+            }
+        }
     }
 
+
+    echo '<p class="prix"> Prix :<span class= "chiffrePrix">  ' . $prix . ' €</span></p>'; //PRIX 
+    echo '<p class="stock"> ' . $stock . ' produit(s) restant(s), payez !</p>'; //STOCK
+    echo '<p class="description"> Description : ' . $description . '.</p>'; //DESCRIPTION
+    echo '<p class="scam"> ' . $scam . ' personnes consultent actuellement la page </p>'; // STOCK + 3
+
     ?>
-    </div>
-    <div class="avis_tout">
+    <div class="avis_tout"> Commentaires :
     <?php
 
     foreach($util as $avis) {
@@ -59,6 +70,7 @@
             <?php
     }
     ?>
+    </div>
     </div>
     <?php
 

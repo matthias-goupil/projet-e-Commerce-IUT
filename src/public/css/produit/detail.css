@@ -4,8 +4,9 @@
 	flex-direction: row;
 	justify-content: center;
 	width: calc(100% - 200px);
-    min-height: calc(100vh - 400px);
+ 	height: calc(100% - 200px);
     padding: 100px;
+
 }
 
 .titre{
@@ -16,19 +17,36 @@ font-size: 48px;
 	border-style: solid;
 	border-width: medium;
 	border-color: black;
+	margin-right: 3%;
+	box-shadow: 0 0 2em black;
+	transition: transform .2s;
 }
 
 .image{
 	background-color: #e5e5e5;
-	height: 90px;
+	width: 100%;
+	display: block;
+	
+}
+
+.images:hover {
+  transform: scale(1.1);
 }
 
 .prix{
-
+	display: inline;
 }
 
 .stock{
 
+}
+
+.etoile {
+
+}
+
+.etoile_gris {
+	filter: grayscale(100%);
 }
 
 .scam{
@@ -44,12 +62,12 @@ font-size: 48px;
 }
 
 .avis_tout{
-
+	margin-top: 2%;
 }
 
 .avis{
-border-width: 10em;
-	border-color: black;
+	margin-top: 10%;
+	padding: 2%;
 }
 
 .nom_prenom{
@@ -62,6 +80,19 @@ border-width: 10em;
 
 .commentaire{
 
+}
+
+.chiffrePrix {
+	color: red;
+	font-weight: bolder;
+}
+
+.contenu {
+	background-color: lightgray;
+	border: solid;
+	border-color: gray;
+	border-radius: 10px;
+	
 }
 
 
