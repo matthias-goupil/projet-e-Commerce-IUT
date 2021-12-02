@@ -65,11 +65,8 @@ abstract class Model{
                 "SELECT * FROM $table_name "
             );
 
-            $data = [];
-            while($object = $rep->fetch(PDO::FETCH_ASSOC)){
-                $data[] = new $class_name($object);
-            }
-            return $data;
+            $rep->setFetchMode(PDO::FETCH_CLASS, $class_name);
+            return $rep->fetchAll();
         }
         catch(PDOException $e){
             if (Conf::getDebug()) {
@@ -85,15 +82,29 @@ abstract class Model{
         try {
             $table_name = "ECommerce__".ucfirst(static::$objet);
             $class_name = "Model".ucfirst(static::$objet);
-            $primary_key = static::$primary;
+//            $primary_key = static::$primary;
+            $primary_keys = static::$primary;
+            $sql = "SELECT * FROM $table_name WHERE ";
+            $data = [];
+            foreach ($primary_value as $key => $value){
+                if(in_array($key,$primary_keys,false)){
+                    $sql .= $key." =:".$key." , ";
+                    $data[$key] = $value;
+                }
+            }
+            $sql = rtrim($sql,",");
 
-            $req_prep = Model::getPDO()->prepare("SELECT * from $table_name WHERE $primary_key =:primarykey");
 
-            $req_prep->execute(array(
-                "primarykey" => $primary_value
-            ));
+            $req_prep = Model::getPdo()->prepare($sql);
+//            $req_prep = Model::getPDO()->prepare("SELECT * from $table_name WHERE $primary_key =:primarykey");
 
-            $object = $req_prep->fetch(PDO::FETCH_ASSOC);
+            $req_prep->execute($data);
+//            $req_prep->execute(array(
+//                "primarykey" => $primary_value
+//            ));
+
+            $req_prep->setFetchMode(PDO::FETCH_CLASS, $class_name);
+            $object = $req_prep->fetch();
 
             // Attention, si il n'y a pas de résultats, on renvoie false
             if (empty($object))
@@ -111,10 +122,10 @@ abstract class Model{
     }
 
     public static function delete($primary_value){
-        $table_name = "ECommerce__" . ucfirst(static::$objet);
-        $primary_key = static::$primary;
-
         try{
+            $table_name = "ECommerce__" . ucfirst(static::$objet);
+            $primary_key = static::$primary;
+
             $req_prep = Model::getPdo()->prepare(
                 "DELETE FROM $table_name WHERE $primary_key=:primarykey"
             );

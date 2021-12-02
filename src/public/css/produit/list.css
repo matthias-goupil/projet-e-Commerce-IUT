@@ -1,0 +1,53 @@
+main{
+    width: calc(1100px);
+    min-height: calc(100vh - 400px);
+    padding: 100px;
+
+    display: grid;
+    grid-template-columns: 200px 200px 200px 200px;
+    grid-column-gap: 100px;
+    grid-row-gap: 40px;
+}
+
+.produit{
+    width: calc(200px - 40px);
+    height: calc(300px - 20px);
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 4px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    transition: 0.25s;
+}
+
+.produit:hover{
+    transform: scale(1.1);
+    box-shadow: 1px 1px 12px #555;
+}
+
+.produit:hover .imageProduit img{
+    transform: scale(1.2);
+}
+
+.produit a{
+    margin-top: 20px;
+    text-decoration: none;
+    font-size: 20px;
+}
+
+.imageProduit{
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+}
+
+.imageProduit img{
+    width: 100%;
+    height: 200px;
+    transition: 0.25s;
+}
+
+
