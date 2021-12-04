@@ -1,5 +1,6 @@
 main{
-    width: calc(1100px);
+    margin: 0 auto;
+    max-width: calc(1100px);
     min-height: calc(100vh - 400px);
     padding: 100px;
 
@@ -36,6 +37,7 @@ main{
     margin-top: 20px;
     text-decoration: none;
     font-size: 20px;
+    text-align: center;
 }
 
 .imageProduit{

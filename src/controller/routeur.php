@@ -3,6 +3,8 @@ require_once "lib/File.php";
 require_once File::build_path(["controller","ControllerError.php"]);
 require_once File::build_path(["controller","ControllerProduit.php"]);
 require_once File::build_path(["controller","ControllerProduitsPanier.php"]);
+require_once File::build_path(["controller","ControllerUtilisateur.php"]);
+
 
 if((!isset($_GET["controller"]) && !isset($_GET["action"])) || (!isset($_GET["controller"]))) { // si le controller et l'action n'existent pas
     $controller = "ControllerProduit";

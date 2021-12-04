@@ -82,26 +82,13 @@ abstract class Model{
         try {
             $table_name = "ECommerce__".ucfirst(static::$objet);
             $class_name = "Model".ucfirst(static::$objet);
-//            $primary_key = static::$primary;
-            $primary_keys = static::$primary;
-            $sql = "SELECT * FROM $table_name WHERE ";
-            $data = [];
-            foreach ($primary_value as $key => $value){
-                if(in_array($key,$primary_keys,false)){
-                    $sql .= $key." =:".$key." , ";
-                    $data[$key] = $value;
-                }
-            }
-            $sql = rtrim($sql,",");
+            $primary_key = static::$primary;
 
+            $req_prep = Model::getPDO()->prepare("SELECT * from $table_name WHERE $primary_key =:primarykey");
 
-            $req_prep = Model::getPdo()->prepare($sql);
-//            $req_prep = Model::getPDO()->prepare("SELECT * from $table_name WHERE $primary_key =:primarykey");
-
-            $req_prep->execute($data);
-//            $req_prep->execute(array(
-//                "primarykey" => $primary_value
-//            ));
+            $req_prep->execute(array(
+                "primarykey" => $primary_value
+            ));
 
             $req_prep->setFetchMode(PDO::FETCH_CLASS, $class_name);
             $object = $req_prep->fetch();
