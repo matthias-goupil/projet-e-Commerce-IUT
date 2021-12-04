@@ -37,4 +37,10 @@ class ControllerProduitsPanier {
         ModelProduitsPanier::supprimerProduit($data);
         ControllerProduitsPanier::readAll();
     }
+
+    public static function valider(){
+        $view = "valider";
+        $titre = "Voici votre panier";
+        require_once File::build_path(["view","view.php"]);
+    }
 }
