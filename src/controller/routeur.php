@@ -3,6 +3,7 @@ require_once "lib/File.php";
 require_once File::build_path(["controller","ControllerError.php"]);
 require_once File::build_path(["controller","ControllerProduit.php"]);
 require_once File::build_path(["controller","ControllerProduitsPanier.php"]);
+require_once File::build_path(["controller","ControllerConnexion.php"]);
 require_once File::build_path(["controller","ControllerUtilisateur.php"]);
 
 
@@ -25,4 +26,5 @@ if(!class_exists($controller) || !method_exists($controller,$action)){
 }
 
 $controller::$action();
+
 

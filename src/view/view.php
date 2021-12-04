@@ -19,7 +19,7 @@
             <ul>
                 <li><a href="?controller=produit&action=read">Detailproduit</a></li>
                 <li><a href="#">Produits</a></li>
-                <li><a href="#">Connexion</a></li>
+                <li><a href="?controller=utilisateur&action=connexion">Connexion</a></li>
                 <li><a href="#">Incription</a></li>
                 <li><a href="#">Panier</a></li>
             </ul>
