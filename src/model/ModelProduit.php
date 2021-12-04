@@ -13,8 +13,6 @@ class ModelProduit extends Model {
     protected $nbVue;
     protected $urlImage1;
 
-
-
     public function save(){
         try{
             $table_name = "ECommerce__".ucfirst(self::$objet);

@@ -65,11 +65,8 @@ abstract class Model{
                 "SELECT * FROM $table_name "
             );
 
-            $data = [];
-            while($object = $rep->fetch(PDO::FETCH_ASSOC)){
-                $data[] = new $class_name($object);
-            }
-            return $data;
+            $rep->setFetchMode(PDO::FETCH_CLASS, $class_name);
+            return $rep->fetchAll();
         }
         catch(PDOException $e){
             if (Conf::getDebug()) {
@@ -93,7 +90,8 @@ abstract class Model{
                 "primarykey" => $primary_value
             ));
 
-            $object = $req_prep->fetch(PDO::FETCH_ASSOC);
+            $req_prep->setFetchMode(PDO::FETCH_CLASS, $class_name);
+            $object = $req_prep->fetch();
 
             // Attention, si il n'y a pas de résultats, on renvoie false
             if (empty($object))
@@ -111,10 +109,10 @@ abstract class Model{
     }
 
     public static function delete($primary_value){
-        $table_name = "ECommerce__" . ucfirst(static::$objet);
-        $primary_key = static::$primary;
-
         try{
+            $table_name = "ECommerce__" . ucfirst(static::$objet);
+            $primary_key = static::$primary;
+
             $req_prep = Model::getPdo()->prepare(
                 "DELETE FROM $table_name WHERE $primary_key=:primarykey"
             );
