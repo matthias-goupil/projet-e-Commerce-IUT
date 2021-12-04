@@ -35,4 +35,27 @@ class ControllerProduit {
             require File::build_path(array("view","view.php"));   
         //}
     }
+
+
+    public static function created() {
+        require_once File::build_path(["model","ModelProduit.php"]);
+        require_once File::build_path(["model","ModelImagesProduit.php"]);
+
+        $p = new ModelProduit(array(
+            "intitule" => $_POST['intitule'], 
+            "prix" => $_POST['prix'], 
+            "stock" => $_POST['stock'], 
+            "description" => $_POST['description'], 
+            "idImagesProduit" => $_POST['idImagesProduit']));
+        $p->save();
+        header('Location: ?controller=Produit&action=readAll');
+    }
+
+    public static function create(){
+        $view = "create";
+        $pagetitle ="ajouter un produit";
+
+        require_once File::build_path(array("view", "view.php"));
+    }
+
 }
