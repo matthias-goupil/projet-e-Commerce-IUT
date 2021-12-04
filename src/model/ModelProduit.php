@@ -11,28 +11,21 @@ class ModelProduit extends Model {
     protected $stock;
     protected $description;
     protected $nbVue;
-    protected $idImagesProduit;
     protected $urlImage1;
-    protected $urlImage2;
-    protected $urlImage3;
-    protected $urlImage4;
-    protected $urlImage5;
-
 
     public function save(){
         try{
             $table_name = "ECommerce__".ucfirst(self::$objet);
             $req_prep = Model::getPdo()->prepare(
-                "INSERT INTO $table_name(intitule,prix,stock, description,nbVue,:idImagesProduit)
-                        VALUES(:intitule,:prix,:stock,:description, :nbVue,:idImagesProduit)"
+                "INSERT INTO $table_name(intitule,prix,stock, description,urlImage1)
+                        VALUES(:intitule,:prix,:stock,:description,:urlImage1)"
             );
             $req_prep->execute([
-                "intitule" => $this->intotule,
+                "intitule" => $this->intitule,
                 "prix" => $this->prix,
-                "quantite" => $this->stock,
+                "stock" => $this->stock,
                 "description" => $this->description,
-                "nbVue" => $this->nbVue,
-                "idImagesProduit" => $this->idImagesProduit
+                "urlImage1" => $this->urlImage1
             ]);
         }catch (PDOException $e){
             if (Conf::getDebug()) {
@@ -43,7 +36,6 @@ class ModelProduit extends Model {
             die();
         }
     }
-
 }
 
 
