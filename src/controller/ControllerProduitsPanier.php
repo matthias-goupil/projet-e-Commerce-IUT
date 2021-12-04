@@ -20,12 +20,10 @@ class ControllerProduitsPanier {
             "idProduit" => $_GET['idProduit']
         ];
     
-            ModelProduitsPanier::ajouterProduit($data);
-            $view = "produitsPanier";
-            $titre = "Voici votre panier";
-    
-            ControllerProduitsPanier::readAll();
-            require File::build_path(["view","view.php"]);
+        ModelProduitsPanier::ajouterProduit($data); 
+        ControllerProduitsPanier::readAll();
+       
+        
     }
 
 
@@ -36,11 +34,7 @@ class ControllerProduitsPanier {
             "idProduit" => $_GET['idProduit']
         ];
     
-            ModelProduitsPanier::supprimerProduit($data);
-            $view = "produitsPanier";
-            $titre = "Voici votre panier";
-    
-            ControllerProduitsPanier::readAll();
-            require File::build_path(["view","view.php"]);
+        ModelProduitsPanier::supprimerProduit($data);
+        ControllerProduitsPanier::readAll();
     }
 }
