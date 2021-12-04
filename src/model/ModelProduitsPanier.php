@@ -114,7 +114,6 @@ class ModelProduitsPanier extends Model {
                                           : Model::getPdo()->prepare("UPDATE $table_name SET quantite = quantite - 1 WHERE idProduit =:idProduit");
             
             $req_prep->execute($data);
-            print_r($quantite);
         }catch(PDOException $e){
             if (Conf::getDebug()) {
                 echo $e->getMessage(); // affiche un message d'erreur
