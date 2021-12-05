@@ -24,12 +24,8 @@
                 <li><a href="#">Panier</a></li>
             </ul>
         </nav>
-    </header>
-
-    <body>
+    </header>    
         <?php require_once File::build_path(["view",self::$objet,$view.".php"])?>
-    </body>
-
     <footer>
         <p>Bottle Trick-shop | Tout droit réservé</p>
     </footer>
