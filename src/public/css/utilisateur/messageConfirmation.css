@@ -1,0 +1,34 @@
+main {
+    width: 100%;
+    height: calc(100vh - 200px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+main div{
+    width: 360px;
+    padding: 40px;
+    background-color: #fff;
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+main div p{
+    text-align: center;
+    font-size: 25px;
+}
+
+main div::before{
+    content: "";
+    display: block;
+    width: 100%;
+    height: 3px;
+    background-color: var(--main-color);
+    position: absolute;
+    top: -3px;
+}

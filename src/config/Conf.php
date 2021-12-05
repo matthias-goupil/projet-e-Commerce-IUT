@@ -9,7 +9,7 @@ class Conf {
 
     static private $dataBasesLocal = [
         'hostname' => 'localhost',
-        'database' => 'Projet-E-Commerce-IUT',
+        'database' => 'Ecommerce',
         'login' => 'root',
         'password' => ''
     ];
