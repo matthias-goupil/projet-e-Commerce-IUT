@@ -9,16 +9,16 @@
     $scam = htmlspecialchars($produit->get("stock") + 3 );
     $noteAddition = 0;
     $nbAvis = 0;
+    $id = $produit->get("idproduit");
 
     
 
     ?>
     <div class="images">
     <?php
-    for($i = 1; $i<6; $i++) { //IMAGES PRODUIT
-        $num = "urlImage".''. $i;
-        echo "<img class='image' src=\"".$produit->get($num) ."\" />";
-    }
+    
+        echo "<img class='image' src=\"".$produit->get("urlImage1") ."\" />";
+    
     ?>
     </div>
     <div class ="contenu">
@@ -40,11 +40,12 @@
             }
             else {
                 echo "<span class='etoile_grise'> </span>";
-            break;    
+                break;    
             }
         }
-    }
+        echo '<br>';
 
+    }
 
     echo '<p class="prix"> Prix :<span class= "chiffrePrix">  ' . $prix . ' €</span></p>'; //PRIX 
     echo '<p class="stock"> ' . $stock . ' produit(s) restant(s), payez !</p>'; //STOCK
@@ -52,6 +53,9 @@
     echo '<p class="scam"> ' . $scam . ' personnes consultent actuellement la page </p>'; // STOCK + 3
 
     ?>
+
+    <a href="?controller=avis&action=goToForm&idProduit=<?php echo $id; ?>"><button> Ecrire un commentaire </button></a>
+
     <div class="avis_tout"> Commentaires :
     <?php
 

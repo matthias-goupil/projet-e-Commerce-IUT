@@ -63,5 +63,4 @@ class ModelAvis extends Model{
             die();
         }
      }
-
 }
