@@ -1,9 +1,9 @@
 <?php
 require_once File::build_path(["model","Model.php"]);
 
-class ModelProduitsPanier extends Model {
+class ModelContenuPanier extends Model {
     protected static $primary='#';
-    protected static $objet = 'produitsPanier';
+    protected static $objet = 'contenuPanier';
 
     protected $idProduit;
     protected $idPanier;
@@ -72,7 +72,7 @@ class ModelProduitsPanier extends Model {
 
         try{
             $req_prep = Model::getPdo()->prepare(
-                "UPDATE ECommerce__ProduitsPanier SET quantite = quantite + 1 WHERE idProduit =:idProduit"
+                "UPDATE $table_name SET quantite = quantite + 1 WHERE idProduit =:idProduit"
             );
             $req_prep->execute($data);
         }catch(PDOException $e){
@@ -107,7 +107,7 @@ class ModelProduitsPanier extends Model {
 
     public static function supprimerProduit($data){
         $table_name = "ECommerce__" . ucfirst(static::$objet);
-        $quantite = ModelProduitsPanier::selectQuantite($data['idProduit']);
+        $quantite = ModelContenuPanier::selectQuantite($data['idProduit']);
 
         try{
             $req_prep = ($quantite['quantite'] < 2 ) ? Model::getPdo()->prepare("DELETE FROM $table_name WHERE idProduit =:idProduit")

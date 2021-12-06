@@ -1,10 +1,7 @@
 <?php
-require_once "lib/File.php";
-require_once File::build_path(["lib","Session"]);
-require_once File::build_path(["lib","Security"]);
 require_once File::build_path(["controller","ControllerError.php"]);
 require_once File::build_path(["controller","ControllerProduit.php"]);
-require_once File::build_path(["controller","ControllerProduitsPanier.php"]);
+require_once File::build_path(["controller","ControllerContenuPanier.php"]);
 require_once File::build_path(["controller","ControllerConnexion.php"]);
 require_once File::build_path(["controller","ControllerUtilisateur.php"]);
 

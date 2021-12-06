@@ -17,8 +17,10 @@ class ModelProduit extends Model {
         try{
             $table_name = "ECommerce__".ucfirst(self::$objet);
             $req_prep = Model::getPdo()->prepare(
+              
                 "INSERT INTO $table_name(intitule,prix,stock, description,urlImage1)
                         VALUES(:intitule,:prix,:stock,:description,:urlImage1)"
+
             );
             $req_prep->execute([
                 "intitule" => $this->intitule,
