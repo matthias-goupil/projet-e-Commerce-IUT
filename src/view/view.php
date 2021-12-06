@@ -10,7 +10,7 @@
     <!--Roboto-->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap" rel="stylesheet">
 </head>
 <body>
     <header>
@@ -19,18 +19,13 @@
             <ul>
                 <li><a href="?controller=produit&action=read">Detailproduit</a></li>
                 <li><a href="#">Produits</a></li>
-                <li><a href="#">Connexion</a></li>
+                <li><a href="?controller=utilisateur&action=connexion">Connexion</a></li>
                 <li><a href="#">Incription</a></li>
                 <li><a href="#">Panier</a></li>
             </ul>
         </nav>
-    </header>
-
-    <body>
-    <?php require_once File::build_path(["view",self::$objet,$view.".php"])?>
-
-    </body>
-
+    </header>    
+        <?php require_once File::build_path(["view",self::$objet,$view.".php"])?>
     <footer>
         <p>Bottle Trick-shop | Tout droit réservé</p>
     </footer>
