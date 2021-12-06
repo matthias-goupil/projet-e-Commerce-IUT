@@ -6,7 +6,8 @@ class ModelPanier extends Model{
     protected static $objet = 'panier';
 
     protected $idPanier;
-    protected $prixTotal;
+    protected $idUtilisateur;
+    protected $prixTotal = 0;
 
     public function save(){
         try{
