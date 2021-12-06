@@ -5,12 +5,18 @@ class ControllerContenuPanier {
 
     public static function readAll(){
     require_once File::build_path(["model","ModelContenuPanier.php"]);
+    
+    	if(Session::isCreate()){
+	    $tabProduitsPanier = ModelContenuPanier::selectAllProduitsPanier();
+	    $view = "produitsPanier";
+	    $titre = "Voici votre panier";
 
-        $tabProduitsPanier = ModelContenuPanier::selectAllProduitsPanier();
-        $view = "produitsPanier";
-        $titre = "Voici votre panier";
+	    require File::build_path(["view","view.php"]);
+    	} else {
+    	    header("Location: ?controller=produitsr&action=readAll");
+    	}
 
-        require File::build_path(["view","view.php"]);
+        
     }
 
     public static function ajouter(){

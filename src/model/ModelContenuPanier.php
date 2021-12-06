@@ -33,17 +33,25 @@ class ModelContenuPanier extends Model {
 
     }
 
-    public static function selectAllProduitsPanier(): array{
+    public static function selectAllProduitsPanierByIdUtilisateur($idUtilisateur): array{
         require_once File::build_path(["model","ModelProduit.php"]);
         try{
             $table_name = "ECommerce__" . ucfirst(static::$objet);
             $class_name = "Model".ucfirst(static::$objet);
-            $rep = self::getPdo()->query(
+            $rep = self::getPdo()->prepare(
                 "SELECT * 
-                 FROM $table_name pa
+                 FROM $table_name cpa
                  JOIN ECommerce__Produit p
-                 ON pa.idProduit = p.idproduit"
+                 ON cpa.idProduit = p.idproduit
+                 JOIN ECommerce__Panier pa
+                 ON cpa.idPanier = pa.idPanier
+                 WHERE idUtilisateur = :idUtilisateur"
+                 
             );
+            
+            $rep->execute([
+            "idUtilisateur" => $idUtilisateur
+            ]);
 
             $data = [];
             while($object = $rep->fetch(PDO::FETCH_ASSOC)){
