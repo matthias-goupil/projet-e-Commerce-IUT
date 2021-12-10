@@ -32,22 +32,28 @@ class ModelContenuPanier extends Model {
 
     }
 
-    public static function selectAllProduitsPanier(): array{
+    public static function selectAllProduitsPanierByIdUtilisateur($idUtilisateur): array{
         require_once File::build_path(["model","ModelProduit.php"]);
         try{
             $table_name = "ECommerce__" . ucfirst(static::$objet);
             $class_name = "Model".ucfirst(static::$objet);
-            $rep = self::getPdo()->query(
+            $rep = self::getPdo()->prepare(
                 "SELECT * 
-                 FROM $table_name pa
-                 JOIN ECommerce__Produit p
-                 ON pa.idProduit = p.idproduit"
+                 FROM $table_name cpa
+                 JOIN ECommerce__Produit p ON cpa.idProduit = p.idproduit
+                 JOIN ECommerce__Panier pa ON cpa.idPanier = pa.idPanier
+                 WHERE idUtilisateur = :idUtilisateur"
+                 
             );
+            
+            $rep->execute([
+            "idUtilisateur" => $idUtilisateur
+            ]);
 
             $data = [];
             while($object = $rep->fetch(PDO::FETCH_ASSOC)){
                 $data[] = [
-                    "produitsPanier" => new $class_name($object),
+                    "contenuPanier" => new $class_name($object),
                     "produit" => new ModelProduit($object)
                 ];    
                 
@@ -71,7 +77,11 @@ class ModelContenuPanier extends Model {
 
         try{
             $req_prep = Model::getPdo()->prepare(
-                "UPDATE $table_name SET quantite = quantite + 1 WHERE idProduit =:idProduit"
+                "UPDATE $table_name cpa
+                JOIN ECommerce__Produit p ON cpa.idProduit = p.idproduit
+                JOIN ECommerce__Panier pa ON cpa.idPanier = pa.idPanier
+                SET quantite = quantite + 1 
+                WHERE idUtilisateur = :idUtilisateur AND cpa.idProduit =:idProduit"
             );
             $req_prep->execute($data);
         }catch(PDOException $e){
@@ -87,12 +97,16 @@ class ModelContenuPanier extends Model {
     public static function selectQuantite($idProduit) {
         $table_name = "ECommerce__" . ucfirst(static::$objet);
 
-        $sql = "SELECT quantite FROM $table_name WHERE idProduit=:nom_tag";
+        $sql = "SELECT quantite FROM $table_name cpa
+        JOIN ECommerce__Produit p ON cpa.idProduit = p.idproduit
+        JOIN ECommerce__Panier pa ON cpa.idPanier = pa.idPanier
+        WHERE cpa.idProduit=:nom_tag AND idUtilisateur =:idUtilisateur";
         // Préparation de la requête
         $req_prep = Model::getPDO()->prepare($sql);
     
         $values = array(
             "nom_tag" => $idProduit,
+            "idUtilisateur" => Session::getIdUtilisateur()
             //nomdutag => valeur, ...
         );
         // On donne les valeurs et on exécute la requête	 
@@ -109,8 +123,17 @@ class ModelContenuPanier extends Model {
         $quantite = ModelContenuPanier::selectQuantite($data['idProduit']);
 
         try{
-            $req_prep = ($quantite['quantite'] < 2 ) ? Model::getPdo()->prepare("DELETE FROM $table_name WHERE idProduit =:idProduit")
-                                          : Model::getPdo()->prepare("UPDATE $table_name SET quantite = quantite - 1 WHERE idProduit =:idProduit");
+            $req_prep = ($quantite['quantite'] < 2 ) ? Model::getPdo()->prepare("DELETE FROM $table_name cpa 
+                                                                                INNER JOIN ECommerce__Produit p ON cpa.idProduit = p.idproduit 
+                                                                                INNER JOIN ECommerce__Panier pa ON cpa.idPanier = pa.idPanier 
+                                                                                WHERE cpa.idProduit =:idProduit AND idUtilisateur = :idUtilisateur")
+                                          : Model::getPdo()->prepare(" UPDATE $table_name cpa
+                                                                    JOIN ECommerce__Produit p
+                                                                    ON cpa.idProduit = p.idproduit
+                                                                    JOIN ECommerce__Panier pa
+                                                                    ON cpa.idPanier = pa.idPanier
+                                                                    SET quantite = quantite - 1 
+                                                                    WHERE idUtilisateur = :idUtilisateur AND cpa.idProduit =:idProduit");
             
             $req_prep->execute($data);
         }catch(PDOException $e){

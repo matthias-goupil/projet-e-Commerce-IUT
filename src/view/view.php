@@ -33,6 +33,7 @@
                 ?>
 
                 <li><a href="?controller=contenuPanier&action=readAll"><img src="public/images/icons/cart.svg">Panier</a></li>
+
             </ul>
         </nav>
     </header>    

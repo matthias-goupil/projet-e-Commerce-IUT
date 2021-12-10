@@ -4,9 +4,10 @@ class ControllerContenuPanier {
     private static $objet = "contenuPanier";
 
     public static function readAll(){
+
         if(Session::userIsCreate()){
             require_once File::build_path(["model","ModelContenuPanier.php"]);
-            $tabProduitsPanier = ModelContenuPanier::selectAllProduitsPanier();
+            $tabProduitsPanier = ModelContenuPanier::selectAllProduitsPanierByIdUtilisateur(Session::getIdUtilisateur());
         }
         else{
             if(!Session::cartIsCreate()){
@@ -19,23 +20,22 @@ class ControllerContenuPanier {
         }
         $view = "produitsPanier";
         $titre = "Voici votre panier";
-
-        require File::build_path(["view","view.php"]);
+	      require File::build_path(["view","view.php"]);
     }
 
     public static function ajouter(){
         if(Session::userIsCreate()){
             require_once File::build_path(["model","ModelContenuPanier.php"]);
-
             $data = [
-                "idProduit" => $_GET['idProduit']
+                "idProduit" => $_GET['idProduit'],
+                "idUtilisateur" => Session::getIdUtilisateur()
             ];
-
             ModelContenuPanier::ajouterProduit($data);
         }
         else{
             Session::incrementQuantiteProduitInCart($_GET["idProduit"]);
         }
+
         header("Location: ?controller=contenuPanier&action=readAll");
     }
 
@@ -45,15 +45,14 @@ class ControllerContenuPanier {
             require_once File::build_path(["model","ModelContenuPanier.php"]);
 
             $data = [
-                "idProduit" => $_GET['idProduit']
+                "idProduit" => $_GET['idProduit'],
+                "idUtilisateur" => Session::getIdUtilisateur()
             ];
-
             ModelContenuPanier::supprimerProduit($data);
         }
         else{
             Session::decrementQuantiteProduitInCart($_GET["idProduit"]);
         }
-    
         header("Location: ?controller=contenuPanier&action=readAll");
     }
 
