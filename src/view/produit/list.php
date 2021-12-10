@@ -1,13 +1,13 @@
 <main>
     <?php
         foreach ($tabProduits as $produit){ ?>
-            <div class="produit">
+            <a href="?controller=produit&action=read&idProduit=<?php echo $produit->get("idproduit")?>"><div class="produit">
                 <div class="imageProduit">
                     <img src="<?php echo $produit->get("urlImage1")?>" />
                 </div>
-                <a href="?controller=produit&action=read&idProduit=<?php echo $produit->get("idproduit")?>"> <?php echo $produit->get("intitule") ?> </a>
+                <p><?php echo $produit->get("intitule") ?></p>
                 <p>Prix : <?php echo $produit->get("prix")?> €</p>
-            </div>
+            </div></a>
         <?php } ?>
 </main>
 
