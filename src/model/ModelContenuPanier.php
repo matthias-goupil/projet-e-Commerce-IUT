@@ -123,10 +123,10 @@ class ModelContenuPanier extends Model {
         $quantite = ModelContenuPanier::selectQuantite($data['idProduit']);
 
         try{
-            $req_prep = ($quantite['quantite'] < 2 ) ? Model::getPdo()->prepare("DELETE FROM $table_name cpa 
-                                                                                INNER JOIN ECommerce__Produit p ON cpa.idProduit = p.idproduit 
-                                                                                INNER JOIN ECommerce__Panier pa ON cpa.idPanier = pa.idPanier 
-                                                                                WHERE cpa.idProduit =:idProduit AND idUtilisateur = :idUtilisateur")
+            $req_prep = ($quantite['quantite'] < 2 ) ? Model::getPdo()->prepare("DELETE FROM ECommerce__ContenuPanier
+                                                                                WHERE idProduit = :idProduit AND idPanier = (SELECT pa.idPanier
+                                                                                                                    FROM ECommerce__Panier pa
+                                                                                                                    WHERE pa.idUtilisateur = :idUtilisateur)")
                                           : Model::getPdo()->prepare(" UPDATE $table_name cpa
                                                                     JOIN ECommerce__Produit p
                                                                     ON cpa.idProduit = p.idproduit
