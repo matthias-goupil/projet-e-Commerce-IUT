@@ -17,6 +17,7 @@
         <h1>Bottle Trick-Shop</h1>
         <nav>
             <ul>
+
                 <li><a href="?controller=produit&action=readAll">Produits</a></li>
                 <?php
                     if(Session::userIsCreate()){
