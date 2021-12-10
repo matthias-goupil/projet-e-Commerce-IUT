@@ -9,7 +9,6 @@ class ModelContenuPanier extends Model {
     protected $idPanier;
     protected $quantite;
 
-    
     public function save(){
         try{
             $table_name = "ECommerce__".ucfirst(self::$objet);

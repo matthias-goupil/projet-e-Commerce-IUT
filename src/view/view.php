@@ -17,11 +17,22 @@
         <h1>Bottle Trick-Shop</h1>
         <nav>
             <ul>
-                <li><a href="?controller=produit&action=read">Detailproduit</a></li>
-                <li><a href="#">Produits</a></li>
-                <li><a href="?controller=utilisateur&action=connexion">Connexion</a></li>
-                <li><a href="#">Incription</a></li>
-                <li><a href="#">Panier</a></li>
+                <li><a href="?controller=produit&action=readAll">Produits</a></li>
+                <?php
+                    if(Session::userIsCreate()){
+                        ?>
+                        <li><a href="?controller=utilisateur&action=deconnected">Déconnexion</a></li>
+                        <?php
+                    }
+                    else{
+                        ?>
+                        <li><a href="?controller=utilisateur&action=connexion">Connexion</a></li>
+                        <li><a href="?controller=utilisateur&action=inscription">Incription</a></li>
+                        <?php
+                    }
+                ?>
+
+                <li><a href="?controller=contenuPanier&action=readAll"><img src="public/images/icons/cart.svg">Panier</a></li>
             </ul>
         </nav>
     </header>    
