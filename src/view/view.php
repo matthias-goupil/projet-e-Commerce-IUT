@@ -17,11 +17,10 @@
         <h1>Bottle Trick-Shop</h1>
         <nav>
             <ul>
-                <li><a href="?controller=produit&action=read">Detailproduit</a></li>
-                <li><a href="#">Produits</a></li>
+                <li><a href="?controller=produit">Produits</a></li>
                 <li><a href="?controller=utilisateur&action=connexion">Connexion</a></li>
-                <li><a href="#">Incription</a></li>
-                <li><a href="#">Panier</a></li>
+                <li><a href="?controller=utilisateur&action=inscription">Incription</a></li>
+                <li><a href="?controller=contenuPanier&action=readAll">Panier</a></li>
             </ul>
         </nav>
     </header>    
