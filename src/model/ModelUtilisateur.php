@@ -62,7 +62,6 @@ class ModelUtilisateur extends Model{
             ]);
 
             if($data = $req_prep->fetch()){
-                print_r($data);
                 return $data[0];
             }
             return false;

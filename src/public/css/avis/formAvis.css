@@ -52,6 +52,7 @@ form input{
     border: 3px solid var(--text-color);
     border-radius: 2px;
     padding: 10px 20px;
+    width: calc(100% - 40px);
     font-size: 15px;
     margin-top: 10px;
 }
@@ -67,20 +68,32 @@ form input[type=submit]{
     cursor: pointer;
 }
 
-#prenomNom{
-    width: 80%;
-    display: flex;
+
+.custom-select {
+  display: flex;
+  align-items: center;
+ 
+}
+
+.textarea {
+ resize: none;
+ margin-top: 3%;
+}
+
+.anonyme {
+    display:flex;
     flex-direction: row;
-    justify-content: space-between;
+    width:80%;
     align-items: center;
 }
 
-#prenomNom div{
-    width: 40%;
-    margin-bottom: 0;
+input[type=checkbox] {
+    width:auto;
+    margin:0;
+    margin-right:20px;
+    margin-left:10px;
 }
 
-#prenomNom div input{
-
-
+select {
+    margin-top: 10px;
 }
