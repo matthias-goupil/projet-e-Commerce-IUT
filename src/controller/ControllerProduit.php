@@ -9,7 +9,7 @@ class ControllerProduit {
 
         $tabProduits = ModelProduit::selectAll();
         $view = "list";
-        $titre = "liste des produits";
+        $titre = "Liste des produits";
 
         require File::build_path(["view","view.php"]);
     }
@@ -20,20 +20,13 @@ class ControllerProduit {
 
         $produit = ModelProduit::select($_GET['idProduit']);
         $util = ModelAvis::selectUtilisateursByProduit($_GET['idProduit']);
-        
-        /*if($produit== NULL) {
-            $controller=''; 
-            $view='error';
-            $pagetitle='Erreur'; 
-            require File::build_path(array("view","view.php"));
-        }
-        else {*/
 
-            $controller=''; 
-            $view='detail';
-            $pagetitle='Détail du produit';
-            require File::build_path(array("view","view.php"));   
-        //}
+        $controller=''; 
+        $view='detail';
+        $titre='Détail du produit';
+
+        require File::build_path(array("view","view.php"));   
+        
     }
 
 

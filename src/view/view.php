@@ -17,6 +17,7 @@
         <h1>Bottle Trick-Shop</h1>
         <nav>
             <ul>
+                <li><a href="?controller=commande&action=readAll">Commandes</a></li>
                 <li><a href="?controller=produit">Produits</a></li>
                 <li><a href="?controller=utilisateur&action=connexion">Connexion</a></li>
                 <li><a href="?controller=utilisateur&action=inscription">Incription</a></li>
