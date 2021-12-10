@@ -31,7 +31,7 @@ class ControllerProduit {
 
             $controller=''; 
             $view='detail';
-            $pagetitle='Détail du produit';
+            $titre='Détail du produit';
             require File::build_path(array("view","view.php"));   
         //}
     }
