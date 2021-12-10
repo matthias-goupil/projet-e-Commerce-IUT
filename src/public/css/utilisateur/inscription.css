@@ -52,7 +52,6 @@ form input{
     border: 3px solid var(--text-color);
     border-radius: 2px;
     padding: 10px 20px;
-    width: calc(100% - 40px);
     font-size: 15px;
     margin-top: 10px;
 }
@@ -66,4 +65,22 @@ form input[type=submit]{
     font-weight: bold;
     border: none;
     cursor: pointer;
+}
+
+#prenomNom{
+    width: 80%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#prenomNom div{
+    width: 40%;
+    margin-bottom: 0;
+}
+
+#prenomNom div input{
+
+
 }

@@ -69,25 +69,36 @@ class ControllerUtilisateur {
 
     public static function create() {
         if(!Session::userIsCreate()){
-            if(isset($_POST["adresseEmail"]) && isset($_POST["motDePasse"]) && isset($_POST["confirmationMotDePasse"])){
-                    $adresseEmail = $_POST["adresseEmail"];
-                    $motDePasse = $_POST["motDePasse"];
-                    $motDePasseConfirmation = $_POST["confirmationMotDePasse"];
+            if(isset($_POST["adresseEmail"]) && isset($_POST["motDePasse"]) && isset($_POST["confirmationMotDePasse"]) && isset($_POST["prenom"]) && isset($_POST["nom"])){
+                $prenom = $_POST["prenom"];
+                $nom = $_POST["nom"];
+                $adresseEmail = $_POST["adresseEmail"];
+                $motDePasse = $_POST["motDePasse"];
+                $motDePasseConfirmation = $_POST["confirmationMotDePasse"];
 
+                if(!empty($prenom) && !empty($nom)){
                     if(filter_var($adresseEmail, FILTER_VALIDATE_EMAIL)){
                         if($motDePasse == $motDePasseConfirmation){
                             require_once File::build_path(["model","ModelUtilisateur.php"]);
                             if(!ModelUtilisateur::adresseEmailExists($adresseEmail)){
                                 $motDePasse = Security::hacher($motDePasse);
+                                $nonce = Security::generateRandomHex();
                                 $user = new ModelUtilisateur([
                                     "adresseEmail" => $adresseEmail,
                                     "motDePasse" => $motDePasse,
-                                    "nonce" => Security::generateRandomHex()
+                                    "nonce" => $nonce,
+                                    "nom" => strtoupper($nom),
+                                    "prenom" => ucfirst($prenom)
                                 ]);
                                 $user->save();
                                 $userID = ModelUtilisateur::checkPassword($adresseEmail,$motDePasse);
-
-                                header("Location: ?controller=utilisateur&action=messageConfirmation&idUtilisateur=".$userID);
+                                require_once File::build_path(["lib","Mail.php"]);
+                                if(Mail::sendConfirmationMail($adresseEmail,"https://webinfo.iutmontp.univ-montp2.fr/~goupilm/projet-e-Commerce-IUT/src/?controller=utilisateur&action=validate&idUtilisateur=$userID&nonce=$nonce")){
+                                    header("Location: ?controller=utilisateur&action=messageConfirmation&idUtilisateur=".$userID);
+                                }
+                                else{
+                                    echo "erreur";
+                                }
                             }
                             else{
                                 $errorEmail = "L'adresse email est déjà utilisée par un utilisateur";
@@ -102,17 +113,30 @@ class ControllerUtilisateur {
                         $errorEmail = "L'adresse email n'est pas valide";
                     }
                 }
+                else{
+                    $errorNomPrenom = "Veuillez donner un nom et un prénom";
+                }
+            }
             else{
-                if(isset($_POST["adresseEmail"])){
+                if(!isset($_POST["adresseEmail"])){
                     $errorEmail = "Veuillez donner une adresse email";
                 }
 
-                if(isset($_POST["motDePasse"])){
+                if(!isset($_POST["motDePasse"])){
                     $errorMotDePasse = "Veuillez donner un mot de passe";
                 }
 
-                if(isset($_POST["confirmationMotDePasse"])){
+                if(!isset($_POST["confirmationMotDePasse"])){
                     $errorMotDePasseConfirmation = "Veuillez donner un mot de passe de confirmation";
+                }
+
+                if(!isset($_POST["nom"]) || isset($_POST["prenom"])){
+                    $errorNomPrenom = "Veuillez donner un nom et un prénom";
+                }
+                else{
+                    if(empty($_POST["nom"]) || empty($_POST["prenom"])){
+                        $errorNomPrenom = "Veuillez donner un nom et un prénom";
+                    }
                 }
             }
 
@@ -180,16 +204,20 @@ class ControllerUtilisateur {
         }
     }
 
-    public static function profil(){
-        if(!Session::userIsCreate()){
+    public static function profil() {
+        if (!Session::userIsCreate()) {
 
-        }
-        else{
+        } else {
             header("Location:");
         }
     }
 
     public static function motDePasseOublie(){
 
+    }
+
+    public static function deconnected(){
+        Session::destroyUser();
+        header("Location: ?controller=produit&action=readAll");
     }
 }
