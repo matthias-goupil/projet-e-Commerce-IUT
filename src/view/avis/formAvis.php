@@ -1,25 +1,29 @@
-<!DOCTYPE html>
-<html>
-    <body>
+<main>
+    <form method="POST" action="?controller=avis&action=create&idProduit=<?php echo $_GET['idProduit'] ?>">
+        <h2>Votre Avis :</h2>
+        <div class="custom-select">
+            <label for="note">Note :</label>
+            <select name="note">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+            </select>
+        </div>
+      
+        <div>
+            <label for="commentaire">Commentaire (optionnel) :</label>
+            <textarea name="commentaire" class="textarea" rows="4" id="commentaire"></textarea>
+        </div>
 
-        <form method="get" action="">
-        <input type='hidden' name='action' value='//TODO'>
+        <div class = "anonyme">
+            <input type="checkbox" id="anonyme" name="anonyme" checked>
+            <label for="anonyme">Commentaire anonyme</label>
+            
+        </div>
 
-  <fieldset>
-    <legend>Votre commentaire :</legend>
-    <p>
-       
-      <label for="commaentaire">Texte (optionnel) :</label> :
-      <input type="text" placeholder="Marquez votre avis" name="commentaire" id="commentaire" optionnal/>
-    </p>
-    <p>
-      <label for="marque_id">Note</label> :
-      <input type="" placeholder="Peugeot" name="marque" id="marque_id" required/>
-    </p>
-    <p>
-      <input type="submit" value="Poster" />
-    </p>
-  </fieldset> 
-</form>
-    </body>
-</html> 
+
+        <input type="submit" value="Poster votre avis">
+    </form>
+</main>

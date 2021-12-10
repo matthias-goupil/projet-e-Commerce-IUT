@@ -13,72 +13,40 @@
 font-size: 48px;
 }
 
-.images {
+
+
+.image{
 	border-style: solid;
 	border-width: medium;
 	border-color: black;
 	margin-right: 3%;
 	box-shadow: 0 0 2em black;
 	transition: transform .2s;
-}
-
-.image{
 	background-color: #e5e5e5;
-	width: 100%;
+	width: 500px;
 	display: block;
 	
 }
 
-.images:hover {
+.image:hover {
   transform: scale(1.1);
 }
 
-.prix{
-	display: inline;
-}
-
-.stock{
-
-}
-
-.etoile {
-
-}
-
-.etoile_gris {
-	filter: grayscale(100%);
-}
-
-.scam{
-
-}
-
-.description{
-
-}
-
 .note_moy{
-
+	padding-top: 3%;
 }
 
 .avis_tout{
-	margin-top: 2%;
+	padding-top: 3%;
 }
 
 .avis{
-	padding: 2%;
-}
-
-.nom_prenom{
-
-}
-
-.note{
-
-}
-
-.commentaire{
-
+	margin-bottom: 1%;
+	padding-bottom: 1%;
+	background-color: #ebebeb;
+	border-style: solid;
+	border-radius: 15px;
+	border-color: #ebebeb;
 }
 
 .chiffrePrix {
@@ -87,7 +55,7 @@ font-size: 48px;
 }
 
 .contenu {
-	background-color: #e5e5e5;
+	background-color: #ffffff;
 	border: solid;
 	border-color: black;
 	border-radius: 10px;
@@ -95,9 +63,24 @@ font-size: 48px;
 	padding-right: 10px;
 }
 
-.contenu:first-child {
-	padding: 10px;
+.contenu * {
+	margin-top: 10px;
 }
 
+
+.bouton{
+    font-size: 18px;
+    padding: 10px 25px;
+    width: auto;
+    background-color: var(--main-color);
+    color: #fff;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+}
+
+.bouton_com {
+	padding-top: 3%;
+}
 
 

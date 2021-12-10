@@ -8,21 +8,23 @@ class ModelAvis extends Model{
     protected $idAvis;
     protected $idProduit;
     protected $idUtilisateur;
-    protected $commentaire;
+    protected $commentaire; //CAN BE NULL
     protected $note;
+    protected $anonyme; //CAN BE NULL
 
     public function save(){
         try{
             $table_name = "ECommerce__".ucfirst(self::$objet);
             $req_prep = Model::getPdo()->prepare(
-                "INSERT INTO $table_name(idProduit,idUtilisateur,commentaire, note)
-                         VALUES(:idProduit,:idUtilisateur,:commentaire,:note)"
+                "INSERT INTO $table_name(idProduit,idUtilisateur,commentaire, note, anonyme)
+                         VALUES(:idProduit,:idUtilisateur,:commentaire,:note, :anonyme)"
             );
             $req_prep->execute([
                 "idProduit" => $this->idProduit,
                 "idUtilisateur" => $this->idUtilisateur,
                 "commentaire" => $this->commentaire,
-                "note" => $this->note
+                "note" => $this->note,
+                "anonyme" => $this->anonyme
             ]);
         }catch (PDOException $e){
             if (Conf::getDebug()) {
