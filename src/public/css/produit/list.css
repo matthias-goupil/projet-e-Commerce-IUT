@@ -10,6 +10,10 @@ main{
     grid-row-gap: 40px;
 }
 
+main a, p{
+    text-decoration: none;
+}
+
 .produit{
     width: calc(200px - 40px);
     height: calc(300px - 20px);
@@ -22,6 +26,8 @@ main{
     align-items: center;
 
     transition: 0.25s;
+
+    text-align: center;
 }
 
 .produit:hover{
