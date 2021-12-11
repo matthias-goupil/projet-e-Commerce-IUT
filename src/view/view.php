@@ -14,14 +14,32 @@
 </head>
 <body>
     <header>
-        <h1>Bottle Trick-Shop</h1>
+        <a href="?controller=produit&action=readAll"><h1>Bottle Trick-Shop</h1></a>
         <nav>
             <ul>
+
+                <li><a href="?controller=produit&action=readAll"><img src="public/images/icons/bottle.svg"><p><?php echo (Session::userIsAdmin())?"Gestion des produits":"Nos produits";?></p></a></li>
+
+                <?php
+                    if(!Session::userIsAdmin()){
+                        ?><li><a href="?controller=contenuPanier&action=readAll"><img src="public/images/icons/cart.svg"><p>Votre panier</p></a></li><?php
+                    }
+                    else{
+                        ?><li><a href="#"><img src="public/images/icons/login.svg"><p>Gestion des utlisateurs</p></a></li><?php
+                    }
+                    if(Session::userIsCreate()){
+                        ?>
+                        <li><a href="?controller=utilisateur&action=deconnected"><img src="public/images/icons/logout.svg"><p>Déconnexion</p></a></li>
+                        <?php
+                    }
+                    else{
+                        ?>
+                        <li><a href="?controller=utilisateur&action=connexion"><img src="public/images/icons/login.svg"><p>Connexion</p></a></li>
+                        <?php
+                    }
+                ?>
                 <li><a href="?controller=commande&action=readAll">Commandes</a></li>
-                <li><a href="?controller=produit">Produits</a></li>
-                <li><a href="?controller=utilisateur&action=connexion">Connexion</a></li>
-                <li><a href="?controller=utilisateur&action=inscription">Incription</a></li>
-                <li><a href="?controller=contenuPanier&action=readAll">Panier</a></li>
+
             </ul>
         </nav>
     </header>    

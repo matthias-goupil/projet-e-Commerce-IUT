@@ -12,35 +12,64 @@ html{
 }
 
 header{
-    width: calc(100% - 200px);
-    height: 100px;
-    padding: 0 100px;
-
-    background-color: var(--main-color);
-
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    align-items: center;
+    align-items:center;
+    width: 90%;
+    height: 100px;
+    padding: 0 5%;
+    background-color: var(--main-color);
+
+    
+}
+
+a{
+    text-decoration: none;
+}
+
+ul{
+    list-style: none;
 }
 
 header h1{
     color: #fff;
 }
 
-header nav ul li{
-    display: inline;
-    margin-left: 20px;
+header p{
+    color: #fff;
+}
+
+header nav ul{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    
 }
 
 header nav ul li a{
     text-decoration: none;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-left: 20px;
+    width: 100%;
+    
+}
+
+header nav ul li a img{
+    margin-right: 5px;
 }
 
 footer{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    position:fixed;
+    bottom: 0;
     width: 100%;
     height: 100px;
-
     background-color: var(--text-color);
 }
 

@@ -2,7 +2,6 @@
 require_once File::build_path(["controller","ControllerError.php"]);
 require_once File::build_path(["controller","ControllerProduit.php"]);
 require_once File::build_path(["controller","ControllerContenuPanier.php"]);
-require_once File::build_path(["controller","ControllerConnexion.php"]);
 require_once File::build_path(["controller","ControllerUtilisateur.php"]);
 require_once File::build_path(["controller","ControllerAvis.php"]);
 

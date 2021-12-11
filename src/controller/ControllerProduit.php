@@ -27,6 +27,10 @@ class ControllerProduit {
 
         require File::build_path(array("view","view.php"));   
         
+            $controller=''; 
+            $view='detail';
+            $titre='Détail du produit';
+            require File::build_path(array("view","view.php"));   
     }
 
 
