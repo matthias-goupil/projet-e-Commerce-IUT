@@ -15,8 +15,8 @@ class ControllerContenuPanier {
             }
             require_once File::build_path(["model","ModelProduit.php"]);
 
-//            Session::insertProduitIntoKart(6,2);
-            $tabProduitsPanier = Session::getKart();
+            Session::insertProduitIntoKart(6,2);
+            $tabProduitsPanier = Session::getCart();
         }
         $view = "produitsPanier";
         $titre = "Voici votre panier";
@@ -28,12 +28,13 @@ class ControllerContenuPanier {
             require_once File::build_path(["model","ModelContenuPanier.php"]);
             $data = [
                 "idProduit" => $_GET['idProduit'],
-                "idUtilisateur" => Session::getIdUtilisateur()
+                "idUtilisateur" => Session::getIdUtilisateur(),
+                "quantite" => 1
             ];
             ModelContenuPanier::ajouterProduit($data);
         }
         else{
-            Session::incrementQuantiteProduitInCart($_GET["idProduit"]);
+            Session::incrementQuantiteProduitInCart($_GET["idProduit"],1);
         }
 
         header("Location: ?controller=contenuPanier&action=readAll");
@@ -46,12 +47,13 @@ class ControllerContenuPanier {
 
             $data = [
                 "idProduit" => $_GET['idProduit'],
-                "idUtilisateur" => Session::getIdUtilisateur()
+                "idUtilisateur" => Session::getIdUtilisateur(),
+                "quantite" => 1
             ];
             ModelContenuPanier::supprimerProduit($data);
         }
         else{
-            Session::decrementQuantiteProduitInCart($_GET["idProduit"]);
+            Session::decrementQuantiteProduitInCart($_GET["idProduit"],1);
         }
         header("Location: ?controller=contenuPanier&action=readAll");
     }
