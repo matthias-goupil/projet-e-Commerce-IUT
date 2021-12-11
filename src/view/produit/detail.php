@@ -40,8 +40,11 @@
 
     <?php
 
+
     if (Session::userIsCreate() == true) {
-        ?> <div class = bouton_com ><a href="?controller=avis&action=goToForm&idProduit=<?php echo $id; ?>"><button class="bouton"> Ecrire un commentaire </button></a></div> <?php
+        ?>        
+        <div><a href="?controller=contenuPanier&action=ajouter&idProduit=<?php echo $id; ?>"><button class="bouton"> Ajouter au panier </button></a></div>
+        <div class = bouton_com ><a href="?controller=avis&action=goToForm&idProduit=<?php echo $id; ?>"><button class="bouton"> Ecrire un commentaire </button></a></div> <?php
     } ?>
 
 
