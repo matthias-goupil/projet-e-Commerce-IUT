@@ -15,7 +15,7 @@ class ControllerContenuPanier {
             }
             require_once File::build_path(["model","ModelProduit.php"]);
 
-            Session::insertProduitIntoKart(ModelProduit::select(6),2);
+//            Session::insertProduitIntoKart(6,2);
             $tabProduitsPanier = Session::getKart();
         }
         $view = "produitsPanier";
