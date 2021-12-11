@@ -37,7 +37,8 @@ font-size: 48px;
 }
 
 .avis_tout{
-	padding-top: 3%;
+	overflow-y:scroll;
+	height:500px;
 }
 
 .avis{
@@ -81,6 +82,8 @@ font-size: 48px;
 
 .bouton_com {
 	padding-top: 3%;
+	padding-bottom: 3%;
+
 }
 
 
