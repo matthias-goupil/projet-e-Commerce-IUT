@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once File::build_path(["model","ModelProduit.php"]);
+
 
 class Session
 {
@@ -13,29 +13,33 @@ class Session
         $_SESSION["cart"] = [];
     }
 
-    public static function insertProduitIntoKart($produit,$quantite){
-        if(!self::updateProduitInCart($produit->get("idProduit"),$quantite)){
+    public static function insertProduitIntoKart($idProduit,$quantite){
+        require_once File::build_path(["model","ModelProduit.php"]);
+        $produit = ModelProduit::select($idProduit);
+        if(!self::incrementQuantiteProduitInCart($idProduit,$quantite)){
             $_SESSION["cart"][] = [
-                "produit" => $produit,
+                "produit" => serialize($produit),
                 "quantite" => $quantite
             ];
         }
     }
 
-    public static function incrementQuantiteProduitInCart($idProduit){
-        foreach($_SESSION["cart"] as $produit){
-            if(isset($produit["produit"]) && $produit["produit"]->get("idProduit") == $idProduit){
-                $produit["quantite"]++;
+    public static function incrementQuantiteProduitInCart($idProduit,$quantite){
+        require_once File::build_path(["model","ModelProduit.php"]);
+        for($i = 0; $i < count($_SESSION["cart"]); $i++){
+            if(unserialize($_SESSION["cart"][$i]["produit"])->get("idproduit") == $idProduit){
+                $_SESSION["cart"][$i]["quantite"] += $quantite;
                 return true;
             }
         }
         return false;
     }
 
-    public static function decrementQuantiteProduitInCart($idProduit){
-        foreach($_SESSION["cart"] as $produit){
-            if(isset($produit["produit"]) && $produit["produit"]->get("idProduit") == $idProduit){
-                $produit["quantite"]++;
+    public static function decrementQuantiteProduitInCart($idProduit,$quantite){
+        require_once File::build_path(["model","ModelProduit.php"]);
+        for($i = 0; $i < count($_SESSION["cart"]); $i++){
+            if(unserialize($_SESSION["cart"][$i]["produit"])->get("idproduit") == $idProduit){
+                $_SESSION["cart"][$i]["quantite"] -= $quantite;
                 return true;
             }
         }
@@ -43,9 +47,10 @@ class Session
     }
 
     public static function updateProduitInCart($idProduit,$quantite){
-        foreach($_SESSION["cart"] as $produit){
-            if(isset($produit["produit"]) && $produit["produit"]->get("idProduit") == $idProduit){
-                $produit["quantite"] = $quantite;
+        require_once File::build_path(["model","ModelProduit.php"]);
+        for($i = 0; $i < count($_SESSION["cart"]); $i++){
+            if(unserialize($_SESSION["cart"][$i]["produit"])->get("idproduit") == $idProduit){
+                $_SESSION["cart"][$i]["quantite"] = $quantite;
                 return true;
             }
         }
@@ -54,15 +59,19 @@ class Session
 
     public static function removeProduitFromCart($idProduit){
         foreach($_SESSION["cart"] as $produit){
-            if(isset($produit["idProduit"]) && $produit["idProduit"]->get("idProduit") == $idProduit){
+            if(isset($produit["idProduit"]) && unserialize($produit["produit"])->get("idProduit") == $idProduit){
                 unset($produit);
                 break;
             }
         }
     }
 
-    public static function getKart(){
+    public static function getCart(){
+        if(!self::cartIsCreate()){
+            self::createCart();
+        }
         return $_SESSION["cart"];
+
     }
 
     public static function getIdUtilisateur(){

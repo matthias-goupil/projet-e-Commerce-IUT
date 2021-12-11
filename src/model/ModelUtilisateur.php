@@ -75,6 +75,29 @@ class ModelUtilisateur extends Model{
         }
     }
 
+    public static function selectIdPanier($idUtilisateur){
+        try{
+            $table_name = "ECommerce__Panier";
+            $req_prep = Model::getPdo()->prepare(
+                "SELECT idPanier FROM $table_name
+                 WHERE idUtilisateur = :idUtilisateur
+                  "
+            );
+            $req_prep->execute([
+                "idUtilisateur" => $idUtilisateur
+            ]);
+
+            return $req_prep->fetch()[0];
+        }catch (PDOException $e){
+            if (Conf::getDebug()) {
+                echo $e->getMessage(); // affiche un message d'erreur
+            } else {
+                ControllerGeneral::error();
+            }
+            die();
+        }
+    }
+
     public static function adresseEmailExists($adresseEmail){
         try{
             $table_name = "ECommerce__".ucfirst(self::$objet);
