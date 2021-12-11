@@ -36,7 +36,7 @@
 
     ?>
 
-    <div><a href="#"><button class="bouton"> Ajouter au panier </button></a></div>
+    <div><a href="?controller=contenuPanier&action=ajouter&idProduit=<?php echo $id?>"><button class="bouton"> Ajouter au panier </button></a></div>
 
     <?php
 
