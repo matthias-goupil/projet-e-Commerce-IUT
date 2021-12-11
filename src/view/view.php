@@ -38,6 +38,8 @@
                         <?php
                     }
                 ?>
+                <li><a href="?controller=commande&action=readAll">Commandes</a></li>
+
             </ul>
         </nav>
     </header>    
