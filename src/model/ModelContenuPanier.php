@@ -9,12 +9,16 @@ class ModelContenuPanier extends Model {
     protected $idPanier;
     protected $quantite;
 
-    public function save(){
+    public function save($idUtilisateur){
         try{
+//            SELECT pa.idPanier
+//                    FROM ECommerce__Panier pa
+//                    WHERE pa.idUtilisateur = :idUtilisateur
             $table_name = "ECommerce__".ucfirst(self::$objet);
             $req_prep = Model::getPdo()->prepare(
                 "INSERT INTO $table_name(idProduit,idPanier,quantite)
-                        VALUES(:idProduit,:idPanier,:quantite)"
+                        VALUES(:idProduit,:idPanier,:quantite)
+                  "
             );
             $req_prep->execute([
                 "idProduit" => $this->idProduit,
@@ -29,7 +33,6 @@ class ModelContenuPanier extends Model {
             }
             die();
         }
-
     }
 
     public static function selectAllProduitsPanierByIdUtilisateur($idUtilisateur): array{
@@ -43,7 +46,7 @@ class ModelContenuPanier extends Model {
                  JOIN ECommerce__Produit p ON cpa.idProduit = p.idproduit
                  JOIN ECommerce__Panier pa ON cpa.idPanier = pa.idPanier
                  WHERE idUtilisateur = :idUtilisateur"
-                 
+
             );
             
             $rep->execute([
@@ -80,7 +83,7 @@ class ModelContenuPanier extends Model {
                 "UPDATE $table_name cpa
                 JOIN ECommerce__Produit p ON cpa.idProduit = p.idproduit
                 JOIN ECommerce__Panier pa ON cpa.idPanier = pa.idPanier
-                SET quantite = quantite + 1 
+                SET quantite = quantite + :quantite 
                 WHERE idUtilisateur = :idUtilisateur AND cpa.idProduit =:idProduit"
             );
             $req_prep->execute($data);
@@ -123,7 +126,7 @@ class ModelContenuPanier extends Model {
         $quantite = ModelContenuPanier::selectQuantite($data['idProduit']);
 
         try{
-            $req_prep = ($quantite['quantite'] < 2 ) ? Model::getPdo()->prepare("DELETE FROM ECommerce__ContenuPanier
+            $req_prep = ($quantite['quantite'] < $data["quantite"] ) ? Model::getPdo()->prepare("DELETE FROM ECommerce__ContenuPanier
                                                                                 WHERE idProduit = :idProduit AND idPanier = (SELECT pa.idPanier
                                                                                                                     FROM ECommerce__Panier pa
                                                                                                                     WHERE pa.idUtilisateur = :idUtilisateur)")
@@ -132,7 +135,7 @@ class ModelContenuPanier extends Model {
                                                                     ON cpa.idProduit = p.idproduit
                                                                     JOIN ECommerce__Panier pa
                                                                     ON cpa.idPanier = pa.idPanier
-                                                                    SET quantite = quantite - 1 
+                                                                    SET quantite = quantite - :quantite 
                                                                     WHERE idUtilisateur = :idUtilisateur AND cpa.idProduit =:idProduit");
             
             $req_prep->execute($data);
@@ -146,4 +149,30 @@ class ModelContenuPanier extends Model {
         }
     }
 
+    public static function produitExists($idProduit,$idutilisateur){
+        $table_name = "ECommerce__" . ucfirst(static::$objet);
+        try{
+            $req_prep = Model::getPdo()->prepare(
+                "SELECT COUNT(*)
+                FROM $table_name cp
+                JOIN ECommerce__Panier p ON p.idPanier = cp.idPanier
+                WHERE idProduit = :idProduit
+                    AND idUtilisateur = :idUtilisateur 
+                "
+            );
+            $req_prep->execute([
+                    "idProduit" => $idProduit,
+                    "idUtilisateur" => $idutilisateur
+                ]);
+
+            return $req_prep->fetch()[0] == 1;
+        }catch(PDOException $e){
+            if (Conf::getDebug()) {
+                echo $e->getMessage(); // affiche un message d'erreur
+            } else {
+                ControllerGeneral::error();
+            }
+            die();
+        }
+    }
 }

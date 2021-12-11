@@ -4,10 +4,33 @@ main{
     min-height: calc(100vh - 400px);
     padding: 100px;
 
+
+}
+.produits{
+    width: 100%;
     display: grid;
     grid-template-columns: 200px 200px 200px 200px;
     grid-column-gap: 100px;
     grid-row-gap: 40px;
+}
+
+#barreAdmin{
+    width: 90%;
+    padding: 0 5%;
+    height: 60px;
+    background-color: var(--text-color);
+    margin-bottom: 50px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+#barreAdmin .button{
+    padding: 10px 20px;
+    background-color: #3399ff;
+    color: #fff;
+    margin-left: 20px;
 }
 
 main a, p{

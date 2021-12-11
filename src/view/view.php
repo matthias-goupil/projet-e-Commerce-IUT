@@ -18,12 +18,15 @@
         <nav>
             <ul>
 
-                <li><a href="?controller=produit&action=readAll"><img src="public/images/icons/bottle.svg"><p>Nos produits</p></a></li>
-                
-
-                <li><a href="?controller=contenuPanier&action=readAll"><img src="public/images/icons/cart.svg"><p>Votre panier</p></a></li>
+                <li><a href="?controller=produit&action=readAll"><img src="public/images/icons/bottle.svg"><p><?php echo (Session::userIsAdmin())?"Gestion des produits":"Nos produits";?></p></a></li>
 
                 <?php
+                    if(!Session::userIsAdmin()){
+                        ?><li><a href="?controller=contenuPanier&action=readAll"><img src="public/images/icons/cart.svg"><p>Votre panier</p></a></li><?php
+                    }
+                    else{
+                        ?><li><a href="#"><img src="public/images/icons/login.svg"><p>Gestion des utlisateurs</p></a></li><?php
+                    }
                     if(Session::userIsCreate()){
                         ?>
                         <li><a href="?controller=utilisateur&action=deconnected"><img src="public/images/icons/logout.svg"><p>Déconnexion</p></a></li>

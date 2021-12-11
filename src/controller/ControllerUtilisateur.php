@@ -34,9 +34,30 @@ class ControllerUtilisateur {
                    require_once File::build_path(["model","ModelUtilisateur.php"]);
                    if($userID = ModelUtilisateur::checkPassword($adresseEmail,$motDePasse)){
                        $user = ModelUtilisateur::select($userID);
-                       var_dump($user);
                        if($user->get("nonce") == "NULL"){
                             Session::createUser($userID,$user->get("role") == "Administrateur");
+                            $panierSession = Session::getCart();
+                            if(count($panierSession) != 0){
+                                require_once File::build_path(["model","ModelContenuPanier.php"]);
+                                require_once File::build_path(["model","ModelProduit.php"]);
+                                foreach (Session::getCart() as $line){
+                                    $produit = unserialize($line["produit"]);
+                                    if(ModelContenuPanier::produitExists($produit->get("idproduit"),Session::getIdUtilisateur())){
+                                        ModelContenuPanier::ajouterProduit([
+                                            "idProduit" => $produit->get("idproduit"),
+                                            "quantite" => $line["quantite"],
+                                            "idUtilisateur" => Session::getIdUtilisateur()
+                                        ]);
+                                    }
+                                    else{
+                                        (new ModelContenuPanier([
+                                            "idProduit" => $produit->get("idproduit"),
+                                            "quantite" => $line["quantite"],
+                                            "idPanier" => ModelUtilisateur::selectIdPanier(Session::getIdUtilisateur())
+                                        ]))->save(Session::getIdUtilisateur());
+                                    }
+                                }
+                            }
                             header("Location: ?controller=produit&action=readAll");
                        }
                        else{
