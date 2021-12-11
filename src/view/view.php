@@ -14,27 +14,27 @@
 </head>
 <body>
     <header>
-        <h1>Bottle Trick-Shop</h1>
+        <a href="?controller=produit&action=readAll"><h1>Bottle Trick-Shop</h1></a>
         <nav>
             <ul>
 
-                <li><a href="?controller=produit&action=readAll">Produits</a></li>
+                <li><a href="?controller=produit&action=readAll"><img src="public/images/icons/bottle.svg"><p>Nos produits</p></a></li>
+                
+
+                <li><a href="?controller=contenuPanier&action=readAll"><img src="public/images/icons/cart.svg"><p>Votre panier</p></a></li>
+
                 <?php
                     if(Session::userIsCreate()){
                         ?>
-                        <li><a href="?controller=utilisateur&action=deconnected">Déconnexion</a></li>
+                        <li><a href="?controller=utilisateur&action=deconnected"><img src="public/images/icons/logout.svg"><p>Déconnexion</p></a></li>
                         <?php
                     }
                     else{
                         ?>
-                        <li><a href="?controller=utilisateur&action=connexion">Connexion</a></li>
-                        <li><a href="?controller=utilisateur&action=inscription">Incription</a></li>
+                        <li><a href="?controller=utilisateur&action=connexion"><img src="public/images/icons/login.svg"><p>Connexion</p></a></li>
                         <?php
                     }
                 ?>
-
-                <li><a href="?controller=contenuPanier&action=readAll"><img src="public/images/icons/cart.svg">Panier</a></li>
-
             </ul>
         </nav>
     </header>    
