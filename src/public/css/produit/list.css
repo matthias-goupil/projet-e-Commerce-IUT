@@ -3,9 +3,8 @@ main{
     max-width: calc(1100px);
     min-height: calc(100vh - 400px);
     padding: 100px;
-
-
 }
+
 .produits{
     width: 100%;
     display: grid;
