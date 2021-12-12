@@ -35,6 +35,15 @@
                 $prixTotal += unserialize($p["produit"])->get('prix')*$p['quantite'];
             }
         }
+
+        if(count($tabProduitsPanier) == 0){
+            echo "
+                <div class='vide'>
+                    <p>Vous n'avez pas de produit dans votre panier.</p>
+                    <a href='?controller=Produit&action=readAll'>Retour à la boutique</a>
+                </div>";
+        }
+
     ?>
 
     <div class="total">
