@@ -4,6 +4,7 @@ require_once File::build_path(["controller","ControllerProduit.php"]);
 require_once File::build_path(["controller","ControllerContenuPanier.php"]);
 require_once File::build_path(["controller","ControllerUtilisateur.php"]);
 require_once File::build_path(["controller","ControllerAvis.php"]);
+require_once File::build_path(["controller","ControllerCommande.php"]);
 
 
 if((!isset($_GET["controller"]) && !isset($_GET["action"])) || (!isset($_GET["controller"]))) { // si le controller et l'action n'existent pas

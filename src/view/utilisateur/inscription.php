@@ -47,6 +47,8 @@
             ?>
         </div>
 
+        <p>Déjà inscrit ? <a id="boutonConnexion" href="?controller=utilisateur&action=connexion">Se connecter</a></p>
+
         <input type="submit" value="S'inscrire">
     </form>
 </main>

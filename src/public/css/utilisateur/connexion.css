@@ -67,3 +67,8 @@ form input[type=submit]{
     border: none;
     cursor: pointer;
 }
+
+#boutonInscription{
+    color: var(--main-color);
+}
+

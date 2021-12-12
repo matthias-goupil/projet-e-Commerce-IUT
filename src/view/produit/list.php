@@ -4,7 +4,7 @@
             ?>
             <div id="barreAdmin">
                 <a href="#" class="button">Ajouter un produit</a>
-                <a href="#" class="button">Commandes</a>
+                <a href="#" class="button">Commandes en cours</a>
                 <a href="#" class="button">Historique commandes</a>
             </div>
             <?php

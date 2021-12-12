@@ -16,6 +16,9 @@ class Session
     public static function insertProduitIntoKart($idProduit,$quantite){
         require_once File::build_path(["model","ModelProduit.php"]);
         $produit = ModelProduit::select($idProduit);
+        if(!self::cartIsCreate()){
+            self::createCart();
+        }
         if(!self::incrementQuantiteProduitInCart($idProduit,$quantite)){
             $_SESSION["cart"][] = [
                 "produit" => serialize($produit),
@@ -26,6 +29,9 @@ class Session
 
     public static function incrementQuantiteProduitInCart($idProduit,$quantite){
         require_once File::build_path(["model","ModelProduit.php"]);
+        if(!self::cartIsCreate()){
+            self::createCart();
+        }
         for($i = 0; $i < count($_SESSION["cart"]); $i++){
             if(unserialize($_SESSION["cart"][$i]["produit"])->get("idproduit") == $idProduit){
                 $_SESSION["cart"][$i]["quantite"] += $quantite;
@@ -36,10 +42,16 @@ class Session
     }
 
     public static function decrementQuantiteProduitInCart($idProduit,$quantite){
+        if(!self::cartIsCreate()){
+            self::createCart();
+        }
         require_once File::build_path(["model","ModelProduit.php"]);
         for($i = 0; $i < count($_SESSION["cart"]); $i++){
             if(unserialize($_SESSION["cart"][$i]["produit"])->get("idproduit") == $idProduit){
                 $_SESSION["cart"][$i]["quantite"] -= $quantite;
+                if($_SESSION["cart"][$i]["quantite"] <= 0){
+                    unset($_SESSION["cart"][$i]);
+                }
                 return true;
             }
         }
@@ -47,6 +59,9 @@ class Session
     }
 
     public static function updateProduitInCart($idProduit,$quantite){
+        if(!self::cartIsCreate()){
+            self::createCart();
+        }
         require_once File::build_path(["model","ModelProduit.php"]);
         for($i = 0; $i < count($_SESSION["cart"]); $i++){
             if(unserialize($_SESSION["cart"][$i]["produit"])->get("idproduit") == $idProduit){
@@ -58,6 +73,9 @@ class Session
     }
 
     public static function removeProduitFromCart($idProduit){
+        if(!self::cartIsCreate()){
+            self::createCart();
+        }
         foreach($_SESSION["cart"] as $produit){
             if(isset($produit["idProduit"]) && unserialize($produit["produit"])->get("idProduit") == $idProduit){
                 unset($produit);

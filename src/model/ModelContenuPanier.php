@@ -9,11 +9,8 @@ class ModelContenuPanier extends Model {
     protected $idPanier;
     protected $quantite;
 
-    public function save($idUtilisateur){
+    public function save(){
         try{
-//            SELECT pa.idPanier
-//                    FROM ECommerce__Panier pa
-//                    WHERE pa.idUtilisateur = :idUtilisateur
             $table_name = "ECommerce__".ucfirst(self::$objet);
             $req_prep = Model::getPdo()->prepare(
                 "INSERT INTO $table_name(idProduit,idPanier,quantite)
@@ -73,8 +70,6 @@ class ModelContenuPanier extends Model {
         }
     }
 
-
-
     public static function ajouterProduit($data){
         $table_name = "ECommerce__" . ucfirst(static::$objet);
 
@@ -124,20 +119,24 @@ class ModelContenuPanier extends Model {
     public static function supprimerProduit($data){
         $table_name = "ECommerce__" . ucfirst(static::$objet);
         $quantite = ModelContenuPanier::selectQuantite($data['idProduit']);
-
         try{
-            $req_prep = ($quantite['quantite'] < $data["quantite"] ) ? Model::getPdo()->prepare("DELETE FROM ECommerce__ContenuPanier
+            if($quantite['quantite'] < $data["quantite"] + 1){
+                unset($data["quantite"]);
+                $req_prep = Model::getPdo()->prepare("DELETE FROM ECommerce__ContenuPanier
                                                                                 WHERE idProduit = :idProduit AND idPanier = (SELECT pa.idPanier
                                                                                                                     FROM ECommerce__Panier pa
-                                                                                                                    WHERE pa.idUtilisateur = :idUtilisateur)")
-                                          : Model::getPdo()->prepare(" UPDATE $table_name cpa
+                                                                                                                    WHERE pa.idUtilisateur = :idUtilisateur)");
+            }
+            else{
+                $req_prep = Model::getPdo()->prepare(" UPDATE $table_name cpa
                                                                     JOIN ECommerce__Produit p
                                                                     ON cpa.idProduit = p.idproduit
                                                                     JOIN ECommerce__Panier pa
                                                                     ON cpa.idPanier = pa.idPanier
                                                                     SET quantite = quantite - :quantite 
                                                                     WHERE idUtilisateur = :idUtilisateur AND cpa.idProduit =:idProduit");
-            
+            }
+
             $req_prep->execute($data);
         }catch(PDOException $e){
             if (Conf::getDebug()) {

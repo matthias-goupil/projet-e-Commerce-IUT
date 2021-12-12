@@ -21,7 +21,7 @@
             ?>
         </div>
 
-        <p>Pas encore inscrit ? <a href="?controller=utilisateur&action=inscription">S'inscrire</a></p>
+        <p>Pas encore inscrit ? <a id="boutonInscription" href="?controller=utilisateur&action=inscription">S'inscrire</a></p>
         <input type="submit" value="Se connecter">
     </form>
 </main>
