@@ -24,22 +24,11 @@
         $noteAddition += $avis["avis"]->get("note");
             $nbAvis++;
         }
-    $noteReste = 5;
 
-
-
-    
     echo '<p class="prix"> Prix :<span class= "chiffrePrix">  ' . $prix . ' €</span></p>'; //PRIX 
     echo '<p class="stock"> ' . $stock . ' produit(s) restant(s)</p>'; //STOCK
     echo '<p class="description"> Description : ' . $description . '.</p>'; //DESCRIPTION
     echo '<p class="scam"> ' . $scam . ' personnes consultent actuellement la page </p>'; // STOCK + 3
-
-    ?>
-
-    <div><a href="?controller=contenuPanier&action=ajouter&idProduit=<?php echo $id?>"><button class="bouton"> Ajouter au panier </button></a></div>
-
-    <?php
-
 
     if (Session::userIsCreate() == true) {
         ?>        
@@ -47,19 +36,14 @@
         <div class = bouton_com ><a href="?controller=avis&action=goToForm&idProduit=<?php echo $id; ?>"><button class="bouton"> Ecrire un commentaire </button></a></div> <?php
     } ?>
 
-
-
-
-
-
     <div class="avis_tout"> <h2>Commentaires :</h2>
 
     <?php
 
      if($nbAvis > 0) {
         
-        $noteGlobale = $noteAddition / $nbAvis;
-        $noteGlobale = round($noteGlobale, 1, PHP_ROUND_HALF_UP);
+        //$noteGlobale = $noteAddition / $nbAvis;
+        $noteGlobale = round($noteAddition / $nbAvis, 1, PHP_ROUND_HALF_UP);
         echo '<p class="note_moy"> Note moyenne : ' . $noteGlobale . '/5</p>';
        }
 
