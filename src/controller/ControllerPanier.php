@@ -13,4 +13,8 @@ class ControllerPanier {
 
         require File::build_path(["view","view.php"]);
     }
+
+    public static function selectAllProduitPanierByIdPanier($idPanier) {
+        
+    }
 } 

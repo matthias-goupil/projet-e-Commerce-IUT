@@ -12,4 +12,6 @@ class ControllerProduitsPanier {
 
         require File::build_path(["view","view.php"]);
     }
+
+
 }

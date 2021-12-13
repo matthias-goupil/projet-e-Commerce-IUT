@@ -5,10 +5,16 @@ class ControllerContenuPanier {
 
     public static function readAll(){
 
-        if(Session::userIsCreate()){
+        if(Session::userIsAdmin() || isset($_GET["idPanier"])) {
+            require_once File::build_path(["model","ModelContenuPanier.php"]);
+            $tabProduitsPanier = ModelContenuPanier::selectAllProduitPanierByIdPanier($_GET["idPanier"]);
+        }
+        
+        else if(Session::userIsCreate()){
             require_once File::build_path(["model","ModelContenuPanier.php"]);
             $tabProduitsPanier = ModelContenuPanier::selectAllProduitsPanierByIdUtilisateur(Session::getIdUtilisateur());
         }
+
         else{
             if(!Session::cartIsCreate()){
                 Session::createCart();
