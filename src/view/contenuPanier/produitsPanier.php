@@ -53,7 +53,7 @@
         <?php
             if($prixTotal > 0){
                 ?>
-                <a href="?controller=contenuPanier&action=valider">VALIDER MON PANIER</a>
+                <a href="?controller=contenuPanier&action=commander">VALIDER MON PANIER</a>
                 <?php
             }
         ?>

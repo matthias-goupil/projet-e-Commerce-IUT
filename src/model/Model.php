@@ -84,7 +84,7 @@ abstract class Model{
             $class_name = "Model".ucfirst(static::$objet);
             $primary_key = static::$primary;
 
-            $req_prep = Model::getPDO()->prepare("SELECT * from $table_name WHERE $primary_key =:primarykey");
+            $req_prep = Model::getPDO()->prepare("SELECT * from $table_name WHERE $primary_key =:primarykey ORDER BY $primary_key DESC");
 
             $req_prep->execute(array(
                 "primarykey" => $primary_value
