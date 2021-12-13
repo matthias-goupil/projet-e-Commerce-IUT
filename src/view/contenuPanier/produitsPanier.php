@@ -1,8 +1,31 @@
 <main>
-    <h1>Votre panier</h1>
     <?php
+    if(Session::userIsAdmin()) {
+        $nom = $_GET['nom'];
+        echo '<h1>Panier de ' . $nom . '</h1>';
+    }
+    else {
+        echo '<h1>Votre panier</h1>';
+    }
         $prixTotal = 0;
-        if(Session::userIsCreate()){
+        if(Session::userIsAdmin() || isset($_GET['idPanier']) ) {
+            foreach ($tabProduitsPanier as $p) {
+                echo '
+
+                    <div class ="produitsPanier">
+                        <a href="#"><img src="'.htmlspecialchars($p['produit']->get('urlImage1')).'"></a>
+                        <a href="#"><p class="nomProduit">'. htmlspecialchars($p['produit']->get('intitule')).'</p></a>
+                        
+                        <p class="controls"> Quantite :'. ' ' . htmlspecialchars($p['contenuPanier']->get('quantite')).'</p>
+                        
+                        <p class="prix"> Prix total : '. htmlspecialchars(($p['produit']->get('prix'))*$p['contenuPanier']->get('quantite')).'€</p>
+                    </div>
+                    <span class "separateur"></span>';
+
+                $prixTotal += $p['produit']->get('prix')*$p['contenuPanier']->get('quantite');
+            }
+        }
+        else if(Session::userIsCreate()){
             foreach ($tabProduitsPanier as $p) {
                 echo '
                     <div class ="produitsPanier">
@@ -51,10 +74,12 @@
         <p>Frais de livraison : 4.99€</p>
         <p>Total : <?php echo $prixTotal ;?>€</p>
         <?php
-            if($prixTotal > 0){
+            if(!Session::userIsAdmin() && !isset($_GET['idPanier'])) {
+                if($prixTotal > 0){
                 ?>
                 <a href="?controller=contenuPanier&action=valider">VALIDER MON PANIER</a>
                 <?php
+                }
             }
         ?>
     </div>

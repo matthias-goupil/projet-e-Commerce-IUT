@@ -45,4 +45,29 @@ class ModelCommande extends Model{
             die();
         }
     }
+
+    public static function selectAllCommandesByIdUtilisateur($idUtilisateur): array{
+        try{
+            $table_name = "ECommerce__" . ucfirst(static::$objet);
+            $class_name = "Model".ucfirst(static::$objet);
+            $rep = self::getPdo()->prepare(
+                "SELECT * FROM $table_name WHERE idUtilisateur = :idUtilisateur"
+            );
+
+            $rep->execute([
+                "idUtilisateur" => $idUtilisateur
+                ]);
+
+            $rep->setFetchMode(PDO::FETCH_CLASS, $class_name);
+            return $rep->fetchAll();
+        } 
+        catch(PDOException $e){
+            if (Conf::getDebug()) {
+                echo $e->getMessage(); // affiche un message d'erreur
+            } else {
+                echo 'Une erreur est survenue <a href=""> retour a la page d\'accueil </a>';
+            }
+            die();
+        }
+    }
 }
