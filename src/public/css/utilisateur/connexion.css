@@ -72,3 +72,6 @@ form input[type=submit]{
     color: var(--main-color);
 }
 
+.error{
+    color: indianred;
+}

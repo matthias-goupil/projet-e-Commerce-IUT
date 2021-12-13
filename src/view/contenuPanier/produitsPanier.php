@@ -35,12 +35,27 @@
                 $prixTotal += unserialize($p["produit"])->get('prix')*$p['quantite'];
             }
         }
+
+        if(count($tabProduitsPanier) == 0){
+            echo "
+                <div class='vide'>
+                    <p>Vous n'avez pas de produit dans votre panier.</p>
+                    <a href='?controller=Produit&action=readAll'>Retour à la boutique</a>
+                </div>";
+        }
+
     ?>
 
     <div class="total">
         <p>Livré par : Mondial Reley</p>
         <p>Frais de livraison : 4.99€</p>
         <p>Total : <?php echo $prixTotal ;?>€</p>
-        <a href="?controller=contenuPanier&action=valider">VALIDER MON PANIER</a>
+        <?php
+            if($prixTotal > 0){
+                ?>
+                <a href="?controller=contenuPanier&action=valider">VALIDER MON PANIER</a>
+                <?php
+            }
+        ?>
     </div>
 </main>

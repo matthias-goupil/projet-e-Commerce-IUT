@@ -2,6 +2,19 @@
 class ControllerUtilisateur {
     private static $objet = "utilisateur";
 
+    public static function readAll(){
+        if(Session::userIsAdmin()){
+            require_once File::build_path(["model","ModelUtilisateur.php"]);
+            $tabUtilisateurs = ModelUtilisateur::selectAll();
+            $view = "list";
+            $titre = "Liste des utilisateurs";
+            require_once File::build_path(["view","view.php"]);
+        }
+        else{
+            header("Location: ?controller=produit&action=readAll");
+        }
+    }
+
     public static function connexion(){
         if(!Session::userIsCreate()){
             $view = "connexion";

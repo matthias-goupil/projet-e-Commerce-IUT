@@ -26,33 +26,36 @@ class ControllerProduit {
         $titre='Détail du produit';
 
         require File::build_path(array("view","view.php"));   
-        
-            $controller=''; 
-            $view='detail';
-            $titre='Détail du produit';
-            require File::build_path(array("view","view.php"));   
     }
 
 
     public static function created() {
-        require_once File::build_path(["model","ModelProduit.php"]);
-        require_once File::build_path(["model","ModelImagesProduit.php"]);
+        if(Session::userIsAdmin()){
+            require_once File::build_path(["model","ModelProduit.php"]);
+            require_once File::build_path(["model","ModelImagesProduit.php"]);
 
-        $p = new ModelProduit(array(
-            "intitule" => $_POST['intitule'], 
-            "prix" => $_POST['prix'], 
-            "stock" => $_POST['stock'], 
-            "description" => $_POST['description'], 
-            "urlImage1" => $_POST['urlImage1']));
-        $p->save();
+            $p = new ModelProduit(array(
+                "intitule" => $_POST['intitule'],
+                "prix" => $_POST['prix'],
+                "stock" => $_POST['stock'],
+                "description" => $_POST['description'],
+                "urlImage1" => $_POST['urlImage1']));
+            $p->save();
+
+        }
         header('Location: ?controller=Produit&action=readAll');
     }
 
     public static function create(){
-        $view = "create";
-        $titre ="Gestion Produits";
+        if(Session::userIsAdmin()){
+            $view = "create";
+            $titre ="Gestion Produits";
 
-        require_once File::build_path(array("view", "view.php"));
+            require_once File::build_path(array("view", "view.php"));
+        }
+        else{
+            header("Location: ?controller=produit&action=readAll");
+        }
     }
 
     public static function update() {
@@ -66,29 +69,32 @@ class ControllerProduit {
     }
 
     public static function updated(){
-        require_once File::build_path(["model","ModelProduit.php"]);
-        require_once File::build_path(["model","ModelImagesProduit.php"]);
+        if(Session::userIsAdmin()){
+            require_once File::build_path(["model","ModelProduit.php"]);
+            require_once File::build_path(["model","ModelImagesProduit.php"]);
 
-        
-        $idproduit = $_GET['idproduit'];
-        $data = array(
-            'idproduit' => $idproduit,
-            'intitule' => $_POST['intitule'],
-            'prix' => $_POST['prix'],
-            'stock' => $_POST['stock'],
-            'description' => $_POST['description'],
-            'urlImage1' => $_POST['urlImage1']
-        );
-        ModelProduit::update($data);
-        ControllerProduit::readAll();
+
+            $idproduit = $_GET['idproduit'];
+            $data = array(
+                'idproduit' => $idproduit,
+                'intitule' => $_POST['intitule'],
+                'prix' => $_POST['prix'],
+                'stock' => $_POST['stock'],
+                'description' => $_POST['description'],
+                'urlImage1' => $_POST['urlImage1']
+            );
+            ModelProduit::update($data);
+        }
+        header("Location: ?controller=produit&action=readAll");
     }
 
     public static function deleted() {
-        require_once File::build_path(["model","ModelProduit.php"]);
-        require_once File::build_path(["model","ModelImagesProduit.php"]);
-
-        ModelProduit::delete($_GET['idproduit']);
-        ControllerProduit::readAll();
+        if(Session::userIsAdmin()){
+            require_once File::build_path(["model","ModelProduit.php"]);
+            require_once File::build_path(["model","ModelImagesProduit.php"]);
+            ModelProduit::delete($_GET['idproduit']);
+        }
+        header("Location: ?controller=produit&action=readAll");
     }
 
 }
