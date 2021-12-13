@@ -50,6 +50,12 @@
         <p>Livré par : Mondial Reley</p>
         <p>Frais de livraison : 4.99€</p>
         <p>Total : <?php echo $prixTotal ;?>€</p>
-        <a href="?controller=contenuPanier&action=valider">VALIDER MON PANIER</a>
+        <?php
+            if($prixTotal > 0){
+                ?>
+                <a href="?controller=contenuPanier&action=valider">VALIDER MON PANIER</a>
+                <?php
+            }
+        ?>
     </div>
 </main>
