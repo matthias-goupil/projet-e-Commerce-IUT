@@ -30,9 +30,10 @@
     echo '<p class="description"> Description : ' . $description . '.</p>'; //DESCRIPTION
     echo '<p class="scam"> ' . $scam . ' personnes consultent actuellement la page </p>'; // STOCK + 3
 
+
+        ?><div><a href="?controller=contenuPanier&action=ajouter&idProduit=<?php echo $id; ?>"><button class="bouton"> Ajouter au panier </button></a></div><?php
     if (Session::userIsCreate() == true) {
-        ?>        
-        <div><a href="?controller=contenuPanier&action=ajouter&idProduit=<?php echo $id; ?>"><button class="bouton"> Ajouter au panier </button></a></div>
+        ?>
         <div class = bouton_com ><a href="?controller=avis&action=goToForm&idProduit=<?php echo $id; ?>"><button class="bouton"> Ecrire un commentaire </button></a></div> <?php
     } ?>
 

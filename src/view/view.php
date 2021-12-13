@@ -26,8 +26,8 @@
                         <li><a href="?controller=commande&action=readAll"><img src="public/images/icons/commande.svg"><p>Vos commandes</p></a></li><?php
                     }
                     else{
-                        ?><li><a href="#"><img src="public/images/icons/login.svg"><p>Gestion des utlisateurs</p></a></li>
-                        <li><a href="?controller=commande&action=readAll">Commandes</a></li><?php
+                        ?><li><a href="?controller=utilisateur&action=readAll"><img src="public/images/icons/login.svg"><p>Gestion des utlisateurs</p></a></li>
+                        <li><a href="?controller=commande&action=readAll"><img src="public/images/icons/commande.svg"><p>Gestion des commandes</p></a></li><?php
                     }
                     if(Session::userIsCreate()){
                         ?>

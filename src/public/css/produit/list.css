@@ -5,7 +5,7 @@ main{
     padding: 100px;
 }
 
-.produits{
+#produits{
     width: 100%;
     display: grid;
     grid-template-columns: 200px 200px 200px 200px;
@@ -80,4 +80,39 @@ main a, p{
     transition: 0.25s;
 }
 
+.adminButtons{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    overflow: hidden;
+    border-radius: 0px 0px 4px 4px;
+}
 
+.adminButtons a{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+    height: 30px;
+    background-color: #414141;
+    color: #fff;
+}
+.produitAdmin{
+    transition: 0.25s;
+}
+
+.produitAdmin:hover{
+    transform: scale(1.05);
+    box-shadow: 1px 1px 12px #555;
+}
+
+.adminButtons a:last-child{
+    background-color: indianred;
+}
+
+.produit.admin:hover{
+    transform: scale(1);
+    box-shadow: none;
+}
