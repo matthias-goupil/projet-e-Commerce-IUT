@@ -70,6 +70,43 @@ class ModelContenuPanier extends Model {
         }
     }
 
+    public static function selectAllProduitPanierByIdPanier($idPanier): array{
+        require_once File::build_path(["model","ModelProduit.php"]);
+        try{
+            $table_name = "ECommerce__" . ucfirst(static::$objet);
+            $class_name = "Model".ucfirst(static::$objet);
+            $rep = self::getPdo()->prepare(
+                "SELECT * 
+                 FROM $table_name cpa
+                 JOIN ECommerce__Produit p ON cpa.idProduit = p.idproduit
+                 WHERE idPanier = :idPanier"
+
+            );
+            
+            $rep->execute([
+            "idPanier" => $idPanier
+            ]);
+
+            $data = [];
+            while($object = $rep->fetch(PDO::FETCH_ASSOC)){
+                $data[] = [
+                    "contenuPanier" => new $class_name($object),
+                    "produit" => new ModelProduit($object)
+                ];    
+                
+            }
+             return $data;
+        } 
+        catch(PDOException $e){
+            if (Conf::getDebug()) {
+                echo $e->getMessage(); // affiche un message d'erreur
+            } else {
+                echo 'Une erreur est survenue <a href=""> retour a la page d\'accueil </a>';
+            }
+            die();
+        }
+    }
+
     public static function ajouterProduit($data){
         $table_name = "ECommerce__" . ucfirst(static::$objet);
 
