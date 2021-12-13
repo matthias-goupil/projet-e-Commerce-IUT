@@ -42,7 +42,7 @@ class ModelContenuPanier extends Model {
                  FROM $table_name cpa
                  JOIN ECommerce__Produit p ON cpa.idProduit = p.idproduit
                  JOIN ECommerce__Panier pa ON cpa.idPanier = pa.idPanier
-                 WHERE idUtilisateur = :idUtilisateur"
+                 WHERE idUtilisateur = :idUtilisateur AND actuel = 1"
 
             );
             
@@ -116,7 +116,7 @@ class ModelContenuPanier extends Model {
                 JOIN ECommerce__Produit p ON cpa.idProduit = p.idproduit
                 JOIN ECommerce__Panier pa ON cpa.idPanier = pa.idPanier
                 SET quantite = quantite + :quantite 
-                WHERE idUtilisateur = :idUtilisateur AND cpa.idProduit =:idProduit"
+                WHERE idUtilisateur = :idUtilisateur AND cpa.idProduit =:idProduit AND actuel = 1"
             );
             $req_prep->execute($data);
         }catch(PDOException $e){
@@ -135,7 +135,7 @@ class ModelContenuPanier extends Model {
         $sql = "SELECT quantite FROM $table_name cpa
         JOIN ECommerce__Produit p ON cpa.idProduit = p.idproduit
         JOIN ECommerce__Panier pa ON cpa.idPanier = pa.idPanier
-        WHERE cpa.idProduit=:nom_tag AND idUtilisateur =:idUtilisateur";
+        WHERE cpa.idProduit=:nom_tag AND idUtilisateur =:idUtilisateur AND actuel = 1";
         // Préparation de la requête
         $req_prep = Model::getPDO()->prepare($sql);
     
@@ -162,7 +162,7 @@ class ModelContenuPanier extends Model {
                 $req_prep = Model::getPdo()->prepare("DELETE FROM ECommerce__ContenuPanier
                                                                                 WHERE idProduit = :idProduit AND idPanier = (SELECT pa.idPanier
                                                                                                                     FROM ECommerce__Panier pa
-                                                                                                                    WHERE pa.idUtilisateur = :idUtilisateur)");
+                                                                                                                    WHERE pa.idUtilisateur = :idUtilisateur AND actuel = 1)");
             }
             else{
                 $req_prep = Model::getPdo()->prepare(" UPDATE $table_name cpa
@@ -171,7 +171,7 @@ class ModelContenuPanier extends Model {
                                                                     JOIN ECommerce__Panier pa
                                                                     ON cpa.idPanier = pa.idPanier
                                                                     SET quantite = quantite - :quantite 
-                                                                    WHERE idUtilisateur = :idUtilisateur AND cpa.idProduit =:idProduit");
+                                                                    WHERE idUtilisateur = :idUtilisateur AND cpa.idProduit =:idProduit AND actuel = 1");
             }
 
             $req_prep->execute($data);
@@ -193,7 +193,7 @@ class ModelContenuPanier extends Model {
                 FROM $table_name cp
                 JOIN ECommerce__Panier p ON p.idPanier = cp.idPanier
                 WHERE idProduit = :idProduit
-                    AND idUtilisateur = :idUtilisateur 
+                    AND idUtilisateur = :idUtilisateur AND actuel = 1
                 "
             );
             $req_prep->execute([

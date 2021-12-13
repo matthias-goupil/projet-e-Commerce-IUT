@@ -4,7 +4,6 @@ class ControllerCommande {
     private static $objet = "commande";
 
     public static function readAll(){
-
     require_once File::build_path(["model","ModelCommande.php"]);
 
     if(!Session::userIsAdmin()){

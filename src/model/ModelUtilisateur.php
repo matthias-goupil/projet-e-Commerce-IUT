@@ -7,21 +7,22 @@ class ModelUtilisateur extends Model{
 
     protected $idUtilisateur;
     protected $adresseEmail;
-    protected $nom =""; // CAN BE NULL
-    protected $prenom = ""; // CAN BE NULL
-    protected $motDePasse = ""; // CAN BE NULL
-    protected $role = "Consommateur"; // CAN BE NULL
+    protected $nom;
+    protected $prenom;
+    protected $motDePasse;
+    protected $role = "Consommateur";
     protected $adressePostale = ""; // CAN BE NULL
     protected $ville = ""; // CAN BE NULL
     protected $codePostal = ""; // CAN BE NULL
+    protected $numeroTelephone = ""; // CAN BE NULL
     protected $nonce = "";
 
     public function save(){
         try{
             $table_name = "ECommerce__".ucfirst(self::$objet);
             $req_prep = Model::getPdo()->prepare(
-                "INSERT INTO $table_name(adresseEmail,nom,prenom,motDePasse,role,adressePostale,ville,codePostal,nonce)
-                         VALUES(:adresseEmail,:nom,:prenom,:motDePasse,:role,:adressePostale,:ville,:codePostal,:nonce)"
+                "INSERT INTO $table_name(adresseEmail,nom,prenom,motDePasse,role,adressePostale,ville,codePostal,numeroTelephone,nonce)
+                         VALUES(:adresseEmail,:nom,:prenom,:motDePasse,:role,:adressePostale,:ville,:codePostal,:numeroTelephone,:nonce)"
             );
             $req_prep->execute([
                 "adresseEmail" => $this->adresseEmail,
@@ -33,6 +34,7 @@ class ModelUtilisateur extends Model{
                 "adressePostale" => $this->adressePostale,
                 "ville" => $this->ville,
                 "codePostal" => $this->codePostal,
+                "numeroTelephone" => $this->numeroTelephone,
                 "nonce" => $this->nonce
             ]);
         }catch (PDOException $e){
@@ -80,7 +82,7 @@ class ModelUtilisateur extends Model{
             $table_name = "ECommerce__Panier";
             $req_prep = Model::getPdo()->prepare(
                 "SELECT idPanier FROM $table_name
-                 WHERE idUtilisateur = :idUtilisateur
+                 WHERE idUtilisateur = :idUtilisateur AND actuel = 1
                   "
             );
             $req_prep->execute([
