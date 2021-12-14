@@ -4,11 +4,11 @@
         <div id="prenomNom">
             <div>
                 <label>Prénom</label>
-                <input type="text" name="prenom" placeholder="Prénom" required>
+                <input type="text" name="prenom" placeholder="Prénom" value="<?php echo (isset($_POST["prenom"]))?$_POST["prenom"]:"";?>" required>
             </div>
             <div>
                 <label>Nom</label>
-                <input type="text" name="nom" placeholder="Nom" required>
+                <input type="text" name="nom" placeholder="Nom" value="<?php echo (isset($_POST["nom"]))?$_POST["nom"]:"";?>"  required>
             </div>
         </div>
         <?php
@@ -19,7 +19,7 @@
 
         <div>
             <label for="email">Adresse Email</label>
-            <input id="email" type="email" name="adresseEmail" placeholder="AdresseEmail" required>
+            <input id="email" type="email" name="adresseEmail" placeholder="AdresseEmail" value="<?php echo (isset($_POST["adresseEmail"]))?$_POST["adresseEmail"]:"";?>" required>
             <?php
                 if(isset($errorEmail)){
                     ?><p class="error"><?php echo htmlspecialchars($errorEmail)?></p><?php

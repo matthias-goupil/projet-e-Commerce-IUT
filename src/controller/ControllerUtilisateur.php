@@ -47,7 +47,7 @@ class ControllerUtilisateur {
                    require_once File::build_path(["model","ModelUtilisateur.php"]);
                    if($userID = ModelUtilisateur::checkPassword($adresseEmail,$motDePasse)){
                        $user = ModelUtilisateur::select($userID);
-                       if($user->get("nonce") == "NULL"){
+                       if($user->get("nonce") == ""){
                             Session::createUser($userID,$user->get("role") == "Administrateur");
                             $panierSession = Session::getCart();
                             if(count($panierSession) != 0){
@@ -190,10 +190,7 @@ class ControllerUtilisateur {
                 $nonce = rawurldecode($_GET["nonce"]);
                 require_once File::build_path(["model","ModelUtilisateur.php"]);
                 if($nonce == ModelUtilisateur::getNonce($idUtilisateur)){
-                    ModelUtilisateur::update([
-                        "idUtilisateur" => $idUtilisateur,
-                        "nonce" => "NULL"
-                    ]);
+                    ModelUtilisateur::setNonceToNULL($idUtilisateur);
                     $view = "validate";
                     $titre = "Confirmation création de compte";
                     require File::build_path(["view","view.php"]);
@@ -216,7 +213,7 @@ class ControllerUtilisateur {
             if(isset($_GET["idUtilisateur"])){
                 require_once File::build_path(["model","ModelUtilisateur.php"]);
                 if($user = ModelUtilisateur::select(rawurldecode($_GET["idUtilisateur"]))){
-                    if($user->get("nonce") != "NULL"){
+                    if($user->get("nonce") != ""){
                         $view = "messageConfirmation";
                         $titre = "Confirmation Email";
                         require File::build_path(["view","view.php"]);

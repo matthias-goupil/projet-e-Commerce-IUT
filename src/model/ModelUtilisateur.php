@@ -153,4 +153,24 @@ class ModelUtilisateur extends Model{
             die();
         }
     }
+
+    public static function setNonceToNULL($idUtilisateur){
+        try{
+            $table_name = "ECommerce__".ucfirst(self::$objet);
+            $rep = Model::getPdo()->prepare(
+                "UPDATE $table_name SET nonce = NULL WHERE idUtilisateur = :idUtilisateur"
+            );
+
+            $rep->execute([
+                "idUtilisateur" => $idUtilisateur
+            ]);
+        }catch (PDOException $e){
+            if (Conf::getDebug()) {
+                echo $e->getMessage(); // affiche un message d'erreur
+            } else {
+                ControllerGeneral::error();
+            }
+            die();
+        }
+    }
 }

@@ -74,13 +74,19 @@
         <p>Frais de livraison : 4.99€</p>
         <p>Total : <?php echo htmlspecialchars($prixTotal) ;?>€</p>
         <?php
-            if(!Session::userIsAdmin() && !isset($_GET['idPanier'])) {
-                if($prixTotal > 0){
-                ?>
-                <a href="?controller=contenuPanier&action=commander">VALIDER MON PANIER</a>
-                <?php
+            if(Session::userIsCreate()){
+                if(!Session::userIsAdmin() && !isset($_GET['idPanier'])) {
+                    if($prixTotal > 0){
+                        ?>
+                        <a href="?controller=contenuPanier&action=commander">VALIDER MON PANIER</a>
+                        <?php
+                    }
                 }
             }
+            else{?>
+                <a href="?controller=utilisateur&action=connexion">SE CONNECTER</a>
+            <?php }
+
         ?>
     </div>
 </main>

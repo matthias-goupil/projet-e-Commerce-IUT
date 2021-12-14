@@ -99,33 +99,43 @@ class ControllerContenuPanier {
     public static function commandePaye(){
         if(!Session::userIsAdmin()){
             if($idUser = Session::getIdUtilisateur()){
-                require_once File::build_path(["model","ModelCommande.php"]);
-                require_once File::build_path(["model","ModelPanier.php"]);
-                require_once File::build_path(["model","ModelUtilisateur.php"]);
-                $user = ModelUtilisateur::select(Session::getIdUtilisateur());
-                $user->update([
-                    "adressePostale" => ($user->get("adressePostale") == "")?$_POST["adresseLivraison"]:$user->get("adressePostale"),
-                    "ville" => ($user->get("ville") == "")?$_POST["villeLivraison"]:$user->get("ville"),
-                    "codePostal" => ($user->get("codePostal") == "")?$_POST["codePostalLivraison"]:$user->get("codePostal"),
-                    "numeroTelephone" => ($user->get("numeroTelephone") == "")?$_POST["numeroTelephone"]:$user->get("numeroTelephone"),
-                    "idUtilisateur" => Session::getIdUtilisateur()
-                ]);
-                $date = new DateTime();
-                $date->modify("+7 day");
+                if(isset($_POST["nom"]) && isset($_POST["prenom"]) && isset($_POST["adresseLivraison"]) && isset($_POST["villeLivraison"]) && isset($_POST["codePostalLivraison"]) && isset($_POST["numeroTelephone"])){
+                    if(!empty($_POST["nom"]) && !empty($_POST["prenom"]) && !empty($_POST["adresseLivraison"]) && !empty($_POST["villeLivraison"]) && !empty($_POST["codePostalLivraison"]) && !empty($_POST["numeroTelephone"])) {
+                        require_once File::build_path(["model", "ModelCommande.php"]);
+                        require_once File::build_path(["model", "ModelPanier.php"]);
+                        require_once File::build_path(["model", "ModelUtilisateur.php"]);
+                        $user = ModelUtilisateur::select(Session::getIdUtilisateur());
+                        $user->update([
+                            "adressePostale" => ($user->get("adressePostale") == "") ? $_POST["adresseLivraison"] : $user->get("adressePostale"),
+                            "ville" => ($user->get("ville") == "") ? $_POST["villeLivraison"] : $user->get("ville"),
+                            "codePostal" => ($user->get("codePostal") == "") ? $_POST["codePostalLivraison"] : $user->get("codePostal"),
+                            "numeroTelephone" => ($user->get("numeroTelephone") == "") ? $_POST["numeroTelephone"] : $user->get("numeroTelephone"),
+                            "idUtilisateur" => Session::getIdUtilisateur()
+                        ]);
+                        $date = new DateTime();
+                        $date->modify("+7 day");
 
-                (new ModelCommande([
-                    "idUtilisateur" => Session::getIdUtilisateur(),
-                    "idPanier" => ModelPanier::getIdPanierByUserID(Session::getIdUtilisateur()),
-                    "nom" => $_POST["nom"],
-                    "prenom" => $_POST["prenom"],
-                    "adresseLivraison" => $_POST["adresseLivraison"],
-                    "villeLivraison" => $_POST["villeLivraison"],
-                    "codePostalLivraison" => $_POST["codePostalLivraison"],
-                    "numeroTelephone" => $_POST["numeroTelephone"],
-                    "dateLivraison" => $date->format("Y-m-d")
-                ]))->save();
+                        (new ModelCommande([
+                            "idUtilisateur" => Session::getIdUtilisateur(),
+                            "idPanier" => ModelPanier::getIdPanierByUserID(Session::getIdUtilisateur()),
+                            "nom" => $_POST["nom"],
+                            "prenom" => $_POST["prenom"],
+                            "adresseLivraison" => $_POST["adresseLivraison"],
+                            "villeLivraison" => $_POST["villeLivraison"],
+                            "codePostalLivraison" => $_POST["codePostalLivraison"],
+                            "numeroTelephone" => $_POST["numeroTelephone"],
+                            "dateLivraison" => $date->format("Y-m-d")
+                        ]))->save();
 
-                self::valider();
+                        header("Location: ?controller=contenuPanier&action=valider");
+                    }
+                    else{
+                        header("Location: ?controller=contenuPanier&action=commander");
+                    }
+                }
+                else{
+                    header("Location: ?controller=contenuPanier&action=commander");
+                }
             }
         }
         else{

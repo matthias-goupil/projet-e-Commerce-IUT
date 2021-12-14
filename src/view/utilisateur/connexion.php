@@ -3,7 +3,7 @@
         <h2><?php echo htmlspecialchars($titre)?></h2>
         <div>
             <label for="email">Adresse Email</label>
-            <input id="email" type="email" name="adresseEmail" placeholder="AdresseEmail">
+            <input id="email" type="email" name="adresseEmail" placeholder="AdresseEmail" value="<?php echo (isset($_POST["adresseEmail"]))?$_POST["adresseEmail"]:"";?>" required>
             <?php
             if(isset($errorEmail)){
                 ?><p class="error"><?php echo htmlspecialchars($errorEmail)?></p><?php
@@ -13,7 +13,7 @@
 
         <div>
             <label for="password">Mot de passe</label>
-            <input id="password" type="password" name="motDePasse" placeholder="Mot de passe">
+            <input id="password" type="password" name="motDePasse" placeholder="Mot de passe" required>
             <?php
             if(isset($errorMotDePasse)){
                 ?><p class="error"><?php echo htmlspecialchars($errorMotDePasse)?></p><?php
