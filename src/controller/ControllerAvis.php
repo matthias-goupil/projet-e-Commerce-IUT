@@ -2,48 +2,41 @@
 
 
 class ControllerAvis {
-
 	private static $objet = "avis";
 
-    
 	public static function goToForm() {
+	    $idProduit = rawurldecode(($_GET['idProduit']));
 
-        require_once File::build_path(["model","ModelProduit.php"]);
-
-        $idProduit = $_GET['idProduit'];
-
-        if (Session::userIsCreate() == false) {
-            header("Location: ?controller=produit&action=read&idProduit=$idProduit");
-        }
-
-        else {
+        if (Session::userIsCreate()) {
+            require_once File::build_path(["model","ModelProduit.php"]);
             require_once File::build_path(["model","ModelUtilisateur.php"]);
             require_once File::build_path(["model","ModelAvis.php"]);
+
             $produit = ModelProduit::select(rawurldecode($_GET['idProduit']));
             $util = ModelAvis::selectUtilisateursByProduit(rawurldecode($_GET['idProduit']));
 
-            $controller=''; 
-            $view='formAvis';
-            $pagetitle='Ecrivez votre commentaire';
+            $view = 'formAvis';
+            $pagetitle = 'Ecrivez votre commentaire';
             require File::build_path(array("view","view.php"));
+        }
+        else {
+            header("Location: ?controller=produit&action=read&idProduit=".rawurlencode($idProduit));
         }
     }
 
     public static function create() {
-
-        $idUtilisateur = Session::getIdUtilisateur();
-        $idProduit = $_GET['idProduit'];
         require_once File::build_path(["model","ModelAvis.php"]);
 
+        $idProduit = rawurldecode($_GET['idProduit']);
+
         if (Session::userIsCreate() == false) {
-             header("Location: ?controller=produit&action=read&idProduit=$idProduit");
+             header("Location: ?controller=produit&action=read&idProduit=".rawurlencode($idProduit));
         }
-
-        else if( Session::getIdUtilisateur() == ModelAvis::selectUtilisateursByProduit(rawurldecode($idProduit))) {
-            header("Location: ?controller=produit&action=read&idProduit=$idProduit");
+        else if( Session::getIdUtilisateur() == ModelAvis::selectUtilisateursByProduit($idProduit)) {
+            header("Location: ?controller=produit&action=read&idProduit=".rawurlencode($idProduit));
         }
-
         else if(isset($_POST["commentaire"])){ // Deux champs complétés
+            $idUtilisateur = Session::getIdUtilisateur();
             $note = $_POST["note"];
             $commentaire = $_POST["commentaire"];
             $anonyme = $_POST["anonyme"] == "on";
@@ -55,19 +48,17 @@ class ControllerAvis {
                                "anonyme" => $anonyme
                                 ]);
             $avis->save();
-            header("Location: ?controller=produit&action=read&idProduit=$idProduit");
+
+            header("Location: ?controller=produit&action=read&idProduit=".rawurlencode($idProduit));
         }
-
         else { // Seul champ obligatoire complété
-             $note = $_POST["note"];
-
+            $note = $_POST["note"];
             $avis = new ModelAvis([  "note" => $note,
                                "idProduit" => $idProduit,
                                "idUtilisateur" => $idUtilisateur
                                 ]);
             $avis->save();
-            header("Location: ?controller=produit&action=read&idProduit=$idProduit");
+            header("Location: ?controller=produit&action=read&idProduit=".rawurlencode($idProduit));
         }
-
     }
 }

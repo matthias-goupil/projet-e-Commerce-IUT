@@ -17,7 +17,7 @@
                 ?>
             <a href="?controller=produit&action=read&idProduit=<?php echo rawurlencode($produit->get("idproduit"))?>"><div class="produit <?php echo (Session::userIsAdmin())?"admin":"";?>">
                     <div class="imageProduit">
-                        <img src="<?php echo rawurlencode($produit->get("urlImage1"))?>" />
+                        <img src="<?php echo htmlspecialchars($produit->get("urlImage1"))?>" />
                     </div>
                     <p><?php echo htmlspecialchars($produit->get("intitule")) ?></p>
                     <p>Prix : <?php echo htmlspecialchars($produit->get("prix"))?> €</p>

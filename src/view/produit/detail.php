@@ -11,9 +11,8 @@
     $nbAvis = 0;
     $id = $produit->get("idproduit");
 
-    
- 
-        echo "<img class='image' src=\"".rawurlencode($produit->get("urlImage1"))."\" />";
+
+        echo "<img class='image' src=\"".htmlspecialchars($produit->get("urlImage1"))."\" />";
     ?>
     <div class ="contenu">
     <?php

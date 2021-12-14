@@ -45,7 +45,6 @@ class ModelPanier extends Model{
             ]);
 
             $data = $req_prep->fetch();
-            print_r($data);
             if(count($data) != 0){
                 return $data[0];
             }

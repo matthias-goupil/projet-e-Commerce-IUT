@@ -50,7 +50,7 @@
                             ?>
                             <a href="?controller=produit&action=read&idProduit=<?php echo $produit["produit"]->get("idproduit")?>" class="produit">
                                 <div>
-                                    <img src="<?php echo rawurlencode($produit["produit"]->get("urlImage1"))?>">
+                                    <img src="<?php echo htmlspecialchars($produit["produit"]->get("urlImage1"))?>">
                                     <p><?php echo htmlspecialchars($produit["produit"]->get("intitule"))?></p>
                                 </div>
                                 <p>Quantité : <?php echo htmlspecialchars($produit["contenuPanier"]->get("quantite"))?></p>

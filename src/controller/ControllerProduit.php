@@ -18,8 +18,8 @@ class ControllerProduit {
         require File::build_path(["model","ModelAvis.php"]);
         require File::build_path(["model","ModelProduit.php"]);
 
-        $produit = ModelProduit::select($_GET['idProduit']);
-        $util = ModelAvis::selectUtilisateursByProduit($_GET['idProduit']);
+        $produit = ModelProduit::select(rawurldecode($_GET['idProduit']));
+        $util = ModelAvis::selectUtilisateursByProduit(rawurldecode($_GET['idProduit']));
 
         $controller=''; 
         $view='detail';
@@ -59,13 +59,19 @@ class ControllerProduit {
     }
 
     public static function update() {
-        require_once File::build_path(["model","ModelProduit.php"]);
-        require_once File::build_path(["model","ModelImagesProduit.php"]);
-        $view = "create";
-        $titre ="Gestion Produits";
+        if(Session::userIsAdmin()){
+            require_once File::build_path(["model","ModelProduit.php"]);
+            require_once File::build_path(["model","ModelImagesProduit.php"]);
 
-        $p = ModelProduit::select($_GET['idproduit']);
-        require_once File::build_path(array("view", "view.php"));
+            $view = "create";
+            $titre ="Gestion Produits";
+            $p = ModelProduit::select(rawurldecode($_GET['idproduit']));
+
+            require_once File::build_path(array("view", "view.php"));
+        }
+        else{
+            header("Location: ?controller=produit&action=readAll");
+        }
     }
 
     public static function updated(){
@@ -73,8 +79,7 @@ class ControllerProduit {
             require_once File::build_path(["model","ModelProduit.php"]);
             require_once File::build_path(["model","ModelImagesProduit.php"]);
 
-
-            $idproduit = $_GET['idproduit'];
+            $idproduit = rawurldecode($_GET['idproduit']);
             $data = array(
                 'idproduit' => $idproduit,
                 'intitule' => $_POST['intitule'],
@@ -92,9 +97,8 @@ class ControllerProduit {
         if(Session::userIsAdmin()){
             require_once File::build_path(["model","ModelProduit.php"]);
             require_once File::build_path(["model","ModelImagesProduit.php"]);
-            ModelProduit::delete($_GET['idproduit']);
+            ModelProduit::delete(rawurldecode($_GET['idproduit']));
         }
         header("Location: ?controller=produit&action=readAll");
     }
-
 }

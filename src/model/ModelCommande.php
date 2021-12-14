@@ -32,7 +32,6 @@ class ModelCommande extends Model{
                 "INSERT INTO $table_name(idUtilisateur,idPanier,nom,prenom,adresseLivraison,villeLivraison,codePostalLivraison,numeroTelephone,dateLivraison)
                          VALUES(:idUtilisateur,:idPanier,:nom,:prenom,:adresseLivraison,:villeLivraison,:codePostalLivraison,:numeroTelephone,:dateLivraison)"
             );
-            echo $this->dateLivraison;
             $req_prep->execute([
                 "idUtilisateur" => $this->idUtilisateur,
                 "idPanier" => $this->idPanier,
@@ -44,8 +43,6 @@ class ModelCommande extends Model{
                 "numeroTelephone" => $this->numeroTelephone,
                 "dateLivraison" => $this->dateLivraison
             ]);
-
-
         }catch (PDOException $e){
             if (Conf::getDebug()) {
                 echo $e->getMessage(); // affiche un message d'erreur

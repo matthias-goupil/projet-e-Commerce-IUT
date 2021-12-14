@@ -74,7 +74,7 @@ class ControllerUtilisateur {
                             header("Location: ?controller=produit&action=readAll");
                        }
                        else{
-                           header("Location: ?controller=utilisateur&action=messageConfirmation&idUtilisateur=".$userID);
+                           header("Location: ?controller=utilisateur&action=messageConfirmation&idUtilisateur=".rawurlencode($userID));
                        }
                    }
                    else{
@@ -127,8 +127,8 @@ class ControllerUtilisateur {
                                 $user->save();
                                 $userID = ModelUtilisateur::checkPassword($adresseEmail,$motDePasse);
                                 require_once File::build_path(["lib","Mail.php"]);
-                                if(Mail::sendConfirmationMail($adresseEmail,"https://webinfo.iutmontp.univ-montp2.fr/~goupilm/projet-e-Commerce-IUT/src/?controller=utilisateur&action=validate&idUtilisateur=$userID&nonce=$nonce")){
-                                    header("Location: ?controller=utilisateur&action=messageConfirmation&idUtilisateur=".$userID);
+                                if(Mail::sendConfirmationMail($adresseEmail,"https://webinfo.iutmontp.univ-montp2.fr/~goupilm/projet-e-Commerce-IUT/src/?controller=utilisateur&action=validate&idUtilisateur=".rawurlencode($userID)."&nonce=".rawurlencode($nonce))){
+                                    header("Location: ?controller=utilisateur&action=messageConfirmation&idUtilisateur=".rawurlencode($userID));
                                 }
                                 else{
                                     echo "erreur";
@@ -186,8 +186,8 @@ class ControllerUtilisateur {
     public static function validate(){
         if(!Session::userIsCreate()){
             if(isset($_GET["idUtilisateur"]) && isset($_GET["nonce"])){
-                $idUtilisateur = $_GET["idUtilisateur"];
-                $nonce = $_GET["nonce"];
+                $idUtilisateur = rawurldecode($_GET["idUtilisateur"]);
+                $nonce = rawurldecode($_GET["nonce"]);
                 require_once File::build_path(["model","ModelUtilisateur.php"]);
                 if($nonce == ModelUtilisateur::getNonce($idUtilisateur)){
                     ModelUtilisateur::update([
@@ -195,7 +195,7 @@ class ControllerUtilisateur {
                         "nonce" => "NULL"
                     ]);
                     $view = "validate";
-                    $pageTitle = "Confirmation création de compte";
+                    $titre = "Confirmation création de compte";
                     require File::build_path(["view","view.php"]);
                 }
                 else{
@@ -215,10 +215,10 @@ class ControllerUtilisateur {
         if(!Session::userIsCreate()){
             if(isset($_GET["idUtilisateur"])){
                 require_once File::build_path(["model","ModelUtilisateur.php"]);
-                if($user = ModelUtilisateur::select($_GET["idUtilisateur"])){
+                if($user = ModelUtilisateur::select(rawurldecode($_GET["idUtilisateur"]))){
                     if($user->get("nonce") != "NULL"){
                         $view = "messageConfirmation";
-                        $titre = "C";
+                        $titre = "Confirmation Email";
                         require File::build_path(["view","view.php"]);
                     }
                     else{
@@ -238,20 +238,22 @@ class ControllerUtilisateur {
         }
     }
 
-    public static function profil() {
-        if (!Session::userIsCreate()) {
+//    public static function profil() {
+//        if (!Session::userIsCreate()) {
+//
+//        } else {
+//            header("Location:");
+//        }
+//    }
 
-        } else {
-            header("Location:");
-        }
-    }
-
-    public static function motDePasseOublie(){
-
-    }
+//    public static function motDePasseOublie(){
+//
+//    }
 
     public static function deconnected(){
-        Session::destroyUser();
+        if(Session::userIsCreate()){
+            Session::destroyUser();
+        }
         header("Location: ?controller=produit&action=readAll");
     }
 }
