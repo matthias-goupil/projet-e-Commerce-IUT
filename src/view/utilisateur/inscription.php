@@ -1,6 +1,6 @@
 <main>
     <form method="POST" action="?controller=utilisateur&action=create">
-        <h2><?php echo $titre?></h2>
+        <h2><?php echo htmlspecialchars($titre)?></h2>
         <div id="prenomNom">
             <div>
                 <label>Prénom</label>
@@ -13,7 +13,7 @@
         </div>
         <?php
         if(isset($errorNomPrenom)){
-            ?><p class="error"><?php echo $errorNomPrenom?></p><?php
+            ?><p class="error"><?php echo htmlspecialchars($errorNomPrenom)?></p><?php
         }
         ?>
 
@@ -22,7 +22,7 @@
             <input id="email" type="email" name="adresseEmail" placeholder="AdresseEmail" required>
             <?php
                 if(isset($errorEmail)){
-                    ?><p class="error"><?php echo $errorEmail?></p><?php
+                    ?><p class="error"><?php echo htmlspecialchars($errorEmail)?></p><?php
                 }
             ?>
         </div>
@@ -32,7 +32,7 @@
             <input id="password" type="password" name="motDePasse" placeholder="Mot de passe" required>
             <?php
                 if(isset($errorMotDePasse)){
-                    ?><p class="error"><?php echo $errorMotDePasse?></p><?php
+                    ?><p class="error"><?php echo htmlspecialchars($errorMotDePasse)?></p><?php
                 }
             ?>
         </div>
@@ -42,7 +42,7 @@
             <input id="confirmationPassword" type="password" name="confirmationMotDePasse" placeholder="Confirmation du mot de passe" required>
             <?php
                 if(isset($errorMotDePasseConfirmation)){
-                    ?><p class="error"><?php echo $errorMotDePasseConfirmation?></p><?php
+                    ?><p class="error"><?php echo htmlspecialchars($errorMotDePasseConfirmation)?></p><?php
                 }
             ?>
         </div>

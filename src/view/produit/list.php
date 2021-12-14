@@ -15,25 +15,18 @@
                 <div class="produitAdmin">
             <?php }
                 ?>
-            <a href="?controller=produit&action=read&idProduit=<?php echo $produit->get("idproduit")?>"><div class="produit <?php echo (Session::userIsAdmin())?"admin":"";?>">
+            <a href="?controller=produit&action=read&idProduit=<?php echo rawurlencode($produit->get("idproduit"))?>"><div class="produit <?php echo (Session::userIsAdmin())?"admin":"";?>">
                     <div class="imageProduit">
-                        <img src="<?php echo $produit->get("urlImage1")?>" />
+                        <img src="<?php echo rawurlencode($produit->get("urlImage1"))?>" />
                     </div>
-                    <p><?php echo $produit->get("intitule") ?></p>
-                    <p>Prix : <?php echo $produit->get("prix")?> €</p>
-                    <?php
-                        if(Session::userIsAdmin()){
-                            ?>
-
-                            <?php
-                        }
-                    ?>
+                    <p><?php echo htmlspecialchars($produit->get("intitule")) ?></p>
+                    <p>Prix : <?php echo htmlspecialchars($produit->get("prix"))?> €</p>
                 </div></a>
                     <?php
                     if(Session::userIsAdmin()){?>
                         <div class="adminButtons">
-                            <a href="?controller=produit&action=update&idproduit=<?php echo $produit->get("idproduit")?>">Modifier</a>
-                            <a href="?controller=produit&action=deleted&idproduit=<?php echo $produit->get("idproduit")?>">Supprimer</a>
+                            <a href="?controller=produit&action=update&idproduit=<?php echo rawurlencode($produit->get("idproduit"))?>">Modifier</a>
+                            <a href="?controller=produit&action=deleted&idproduit=<?php echo rawurlencode($produit->get("idproduit"))?>">Supprimer</a>
                         </div>
                         </div>
                         <?php }

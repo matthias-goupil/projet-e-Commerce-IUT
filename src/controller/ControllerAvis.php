@@ -19,8 +19,8 @@ class ControllerAvis {
         else {
             require_once File::build_path(["model","ModelUtilisateur.php"]);
             require_once File::build_path(["model","ModelAvis.php"]);
-            $produit = ModelProduit::select($_GET['idProduit']);
-            $util = ModelAvis::selectUtilisateursByProduit($_GET['idProduit']);
+            $produit = ModelProduit::select(rawurldecode($_GET['idProduit']));
+            $util = ModelAvis::selectUtilisateursByProduit(rawurldecode($_GET['idProduit']));
 
             $controller=''; 
             $view='formAvis';
@@ -39,7 +39,7 @@ class ControllerAvis {
              header("Location: ?controller=produit&action=read&idProduit=$idProduit");
         }
 
-        else if( Session::getIdUtilisateur() == ModelAvis::selectUtilisateursByProduit($idProduit)) {
+        else if( Session::getIdUtilisateur() == ModelAvis::selectUtilisateursByProduit(rawurldecode($idProduit))) {
             header("Location: ?controller=produit&action=read&idProduit=$idProduit");
         }
 

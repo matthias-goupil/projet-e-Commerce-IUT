@@ -2,7 +2,7 @@
     <?php
     if(Session::userIsAdmin()) {
         $nom = $_GET['nom'];
-        echo '<h1>Panier de ' . $nom . '</h1>';
+        echo '<h1>Panier de ' . htmlspecialchars($nom) . '</h1>';
     }
     else {
         echo '<h1>Votre panier</h1>';
@@ -72,7 +72,7 @@
     <div class="total">
         <p>Livré par : Mondial Reley</p>
         <p>Frais de livraison : 4.99€</p>
-        <p>Total : <?php echo $prixTotal ;?>€</p>
+        <p>Total : <?php echo htmlspecialchars($prixTotal) ;?>€</p>
         <?php
             if(!Session::userIsAdmin() && !isset($_GET['idPanier'])) {
                 if($prixTotal > 0){

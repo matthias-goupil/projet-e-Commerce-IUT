@@ -1,5 +1,5 @@
 <main>
-    <form method="POST" action="?controller=avis&action=create&idProduit=<?php echo $_GET['idProduit'] ?>">
+    <form method="POST" action="?controller=avis&action=create&idProduit=<?php echo rawurlencode($_GET['idProduit'])?>">
         <h2>Votre Avis :</h2>
         <div class="custom-select">
             <label for="note">Note :</label>
