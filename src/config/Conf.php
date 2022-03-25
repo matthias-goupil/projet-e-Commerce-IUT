@@ -1,12 +1,5 @@
 <?php
 class Conf {
-    static private $databasesIUT = [
-        'hostname' => 'webinfo.iutmontp.univ-montp2.fr',
-        'database' => 'goupilm',
-        'login' => 'goupilm',
-        'password' => '071043647CG'
-    ];
-
     static private $dataBasesLocal = [
         'hostname' => 'localhost',
         'database' => 'Ecommerce',
